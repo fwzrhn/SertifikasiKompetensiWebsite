@@ -57,7 +57,6 @@ class AdminController extends Controller
         $extracurricularCount = \App\Models\Extracurricular::count();
         $galleryCount = \App\Models\Gallery::count();
 
-        // Kalau mau bisa juga ambil data terbaru (misal 5 terakhir)
         $latestStudents = \App\Models\Student::latest()->take(5)->get();
         $latestTeachers = \App\Models\Teacher::latest()->take(5)->get();
         $latestNews = \App\Models\News::latest()->take(5)->get();
