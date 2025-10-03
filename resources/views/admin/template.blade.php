@@ -14,126 +14,114 @@
     <style>
         body {
             background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
         }
 
-        /* Navbar */
-        .navbar {
-            background: linear-gradient(90deg, #1a5e3d, #2e7d50);
+        /* Sidebar */
+        .sidebar {
+            width: 240px;
+            background: #0f2e1f; /* lebih gelap */
+            color: #fff;
+            min-height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 20px;
+            display: flex;
+            flex-direction: column;
         }
-        .navbar .nav-link {
-            color: #fff !important;
+        .sidebar .nav-link {
+            color: #ddd;
+            padding: 10px 20px;
+            display: block;
             transition: 0.2s;
         }
-        .navbar .nav-link.active {
-            font-weight: bold;
-            border-bottom: 2px solid #d4af37;
-        }
-        .navbar .nav-link:hover {
-            color: #d4af37 !important;
-        }
-
-        /* Buttons */
-        .btn-primary {
+        .sidebar .nav-link.active {
             background-color: #1a5e3d;
-            border-color: #1a5e3d;
-        }
-        .btn-primary:hover {
-            background-color: #2e7d50;
-            border-color: #2e7d50;
-        }
-        .btn-outline-light {
-            border-color: #fff;
+            font-weight: bold;
             color: #fff;
         }
-        .btn-outline-light:hover {
-            background-color: #d4af37;
-            border-color: #d4af37;
-            color: #1a1a1a;
+        .sidebar .nav-link:hover {
+            background-color: #2e7d50;
+            color: #fff;
+        }
+        .sidebar .navbar-brand {
+            color: #fff;
+            font-weight: bold;
+            padding: 0 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .sidebar .navbar-brand img {
+            height: 36px;
+            margin-right: 8px;
         }
 
-        /* Card */
-        .card {
-            background-color: #fff;
-            border-radius: 8px;
-            border: none;
+        /* Content */
+        .content {
+            margin-left: 240px;
+            padding: 20px;
+            min-height: calc(100vh - 50px); /* biar ga nabrak footer */
         }
 
         /* Footer */
         footer {
-            background-color: #1a5e3d;
+            background-color: #0f2e1f;
             color: #fff;
             padding: 12px 0;
+            margin-left: 240px;   /* sejajar sama sidebar */
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: calc(100% - 240px);
         }
     </style>
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
-        <div class="container-fluid">
-            <a class="navbar-brand fw-bold d-flex align-items-center" href="{{ route('admin.dashboard') }}">
-                <img src="{{ asset('assets/image/ikhlas-beramal-png-6-Transparent-Images.png') }}" alt="Logo" style="height:36px; margin-right:8px;">
-                MTsN 10 Tasikmalaya
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->is('administrator/students*') ? 'active' : '' }}" href="{{ route('students.index') }}">
-                            👨‍🎓 Students
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->is('administrator/teachers*') ? 'active' : '' }}" href="{{ route('teachers.index') }}">
-                            👨‍🏫 Teachers
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->is('administrator/news*') ? 'active' : '' }}" href="{{ route('news.index') }}">
-                            📰 News
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->is('administrator/galleries*') ? 'active' : '' }}" href="{{ route('galleries.index') }}">
-                            🖼️ Gallery
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->is('administrator/extracurriculars*') ? 'active' : '' }}" href="{{ route('extracurricular.index') }}">
-                            🎯 Extracurricular
-                        </a>
-                    </li>
-                </ul>
-
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <span class="navbar-text text-white me-3">
-                            👋 Halo, {{ auth()->check() ? auth()->user()->username : 'Admin' }}
-                        </span>
-                    </li>
-                    <li class="nav-item">
-                        <form action="{{ route('admin.logout') }}" method="POST" class="d-inline">
-                            @csrf
-                            <button type="submit" class="btn btn-outline-light btn-sm fw-bold">Logout</button>
-                        </form>
-                    </li>
-                </ul>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <a class="navbar-brand" href="{{ route('admin.dashboard') }}">
+            <img src="{{ asset('assets/image/ikhlas-beramal-png-6-Transparent-Images.png') }}" alt="Logo">
+            MTsN 10
+        </a>
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link {{ request()->is('administrator/students*') ? 'active' : '' }}" href="{{ route('students.index') }}">👨‍🎓 Students</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->is('administrator/teachers*') ? 'active' : '' }}" href="{{ route('teachers.index') }}">👨‍🏫 Teachers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->is('administrator/news*') ? 'active' : '' }}" href="{{ route('news.index') }}">📰 News</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->is('administrator/galleries*') ? 'active' : '' }}" href="{{ route('galleries.index') }}">🖼️ Gallery</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->is('administrator/extracurriculars*') ? 'active' : '' }}" href="{{ route('extracurricular.index') }}">🎯 Extracurricular</a>
+            </li>
+        </ul>
+        <div class="mt-auto p-3">
+            <div class="text-white mb-2">
+                👋 Halo, {{ auth()->check() ? auth()->user()->username : 'Admin' }}
             </div>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <div class="container my-4 flex-grow-1">
-        <div class="p-4 rounded shadow-sm bg-white">
-            @yield('content')
+            <form action="{{ route('admin.logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-outline-light btn-sm fw-bold w-100">Logout</button>
+            </form>
         </div>
     </div>
 
+    <!-- Content -->
+    <main class="content">
+        @yield('content')
+    </main>
+
     <!-- Footer -->
-    <footer class="text-center mt-auto">
+    <footer>
         <small>© {{ date('Y') }} MTsN 10 Tasikmalaya | Ikhlas Beramal</small>
     </footer>
 
@@ -142,8 +130,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-
-
     @stack('scripts')
 </body>
 </html>

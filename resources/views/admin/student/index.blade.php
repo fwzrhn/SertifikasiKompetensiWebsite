@@ -6,7 +6,7 @@
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2>Data Siswa</h2>
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#createModal">
             + Tambah Siswa
         </button>
     </div>
@@ -15,9 +15,9 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <div class="card shadow-sm">
+    <div class="">
         <div class="card-body p-0">
-            <table id="studentTable" class="table table-striped mb-0">
+            <table id="studentTable" class="table table-hover mb-0">
                 <thead class="table-success text-dark">
                     <tr>
                         <th>NISN</th>
@@ -35,16 +35,18 @@
                             <td>{{ $student->jenis_kelamin }}</td>
                             <td>{{ $student->tahun_masuk }}</td>
                             <td>
-                                <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editModal{{ $student->id_siswa }}">
-                                    Edit
+                                <button class="btn btn-outline-success btn-sm" data-bs-toggle="modal" data-bs-target="#editModal{{ $student->id_siswa }}">
+                                    ✎ Edit
                                 </button>
                                 <form action="{{ route('students.destroy', $student->id_siswa) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin hapus?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">🗑 Hapus</button>
                                 </form>
                             </td>
                         </tr>
+
+                        <!-- Modal Edit -->
                         <div class="modal fade" id="editModal{{ $student->id_siswa }}" tabindex="-1" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -77,7 +79,7 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="submit" class="btn btn-success">Update</button>
+                                            <button type="submit" class="btn btn-success">✅ Update</button>
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                                         </div>
                                     </form>
@@ -91,6 +93,7 @@
     </div>
 </div>
 
+<!-- Modal Create -->
 <div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -122,7 +125,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">Simpan</button>
+                    <button type="submit" class="btn btn-success">💾 Simpan</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                 </div>
             </form>
@@ -134,9 +137,10 @@
 <script>
     $(document).ready(function() {
         $('#studentTable').DataTable({
-            "paging": true,
-            "searching": true,
-            "ordering": true
+            // "paging": true,
+            // "searching": true,
+            // "ordering": true,
+            "responsive": true
         });
     });
 </script>
