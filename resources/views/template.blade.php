@@ -62,7 +62,7 @@
             text-align: center;
         }
         .content{
-            margin-top: 110px
+            margin-top: 70px
         }
     </style>
 </head>

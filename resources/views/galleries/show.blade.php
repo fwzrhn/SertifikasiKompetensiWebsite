@@ -3,6 +3,7 @@
 @section('title', $gallery->judul)
 
 @section('content')
+<div class="container" style="height: 20px"></div>
 <div class="container my-5">
     <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
         <div class="card-body p-4">

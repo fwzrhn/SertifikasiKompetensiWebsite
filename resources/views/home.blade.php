@@ -1,12 +1,12 @@
 @extends('template')
 
-@section('title', $schoolProfile?->nama_sekolah ?? 'Home')
+@section('title', 'Home')
 
 @section('content')
 
 <!-- Carousel -->
 <div id="carousel" class="carousel slide position-relative" data-bs-ride="carousel">
-
+    
     <!-- Indikator -->
     <div class="carousel-indicators">
         <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active"></button>
@@ -14,18 +14,24 @@
         <button type="button" data-bs-target="#carousel" data-bs-slide-to="2"></button>
     </div>
 
-    <!-- Isi carousel (gambar statis) -->
+    <!-- Isi carousel -->
     <div class="carousel-inner">
         <div class="carousel-item active position-relative">
-            <img src="{{ asset('assets/image/image.png') }}" class="d-block w-100" alt="Slide 1">
+            <img src="{{ asset('assets/image/image.png') }}" 
+                 class="d-block w-100" 
+                 alt="Slide 1">
             <div class="overlay"></div>
         </div>
         <div class="carousel-item position-relative">
-            <img src="{{ asset('assets/image/image.png') }}" class="d-block w-100" alt="Slide 2">
+            <img src="{{ asset('assets/image/image.png') }}" 
+                 class="d-block w-100" 
+                 alt="Slide 2">
             <div class="overlay"></div>
         </div>
         <div class="carousel-item position-relative">
-            <img src="{{ asset('assets/image/image.png') }}" class="d-block w-100" alt="Slide 3">
+            <img src="{{ asset('assets/image/image.png') }}" 
+                 class="d-block w-100" 
+                 alt="Slide 3">
             <div class="overlay"></div>
         </div>
     </div>
@@ -33,30 +39,19 @@
     <!-- Overlay konten -->
     <div class="carousel-caption d-flex h-100 align-items-center justify-content-center">
         <div class="row w-100 align-items-center">
-
-            <!-- Logo Sekolah -->
+            
+            <!-- Logo -->
             <div class="col-md-5 text-center mb-4 mb-md-0">
-                @if($schoolProfile?->logo)
-                    <img src="{{ asset($schoolProfile->logo) }}" 
-                         alt="Logo {{ $schoolProfile->nama_sekolah }}" 
-                         class="img-fluid logo-carousel">
-                @else
-                    <img src="{{ asset('assets/image/ikhlas-beramal-png-6-Transparent-Images.png') }}" 
-                         alt="Logo Default" 
-                         class="img-fluid logo-carousel">
-                @endif
+                <img src="{{ asset('assets/image/ikhlas-beramal-png-6-Transparent-Images.png') }}" 
+                     alt="Logo Sekolah" 
+                     class="img-fluid logo-carousel">
             </div>
 
-            <!-- Nama & Motto Sekolah -->
+            <!-- Teks -->
             <div class="col-md-7 text-start text-light">
-                <h1 class="fw-bold display-4 title-carousel">
-                    {{ $schoolProfile?->nama_sekolah ?? 'Nama Sekolah' }}
-                </h1>
-                <p class="lead subtitle-carousel">
-                    {{ $schoolProfile?->motto ?? 'Hebat Bermartabat, Mandiri Berprestasi.' }}
-                </p>
+                <h1 class="fw-bold display-4 title-carousel">MTsN 10 Tasikmalaya</h1>
+                <p class="lead subtitle-carousel">Hebat Bermartabat, Mandiri Berprestasi.</p>
             </div>
-
         </div>
     </div>
 
@@ -67,7 +62,6 @@
     <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
         <span class="carousel-control-next-icon"></span>
     </button>
-
 </div>
 
 <!-- Garis Pembatas -->
@@ -77,7 +71,7 @@
 <div class="container my-5">
     <div class="text-center mb-5">
         <h2 class="fw-bold section-title">Berita Terbaru</h2>
-        <p class="text-muted">Informasi terkini seputar {{ $schoolProfile?->nama_sekolah ?? 'Sekolah' }}</p>
+        <p class="text-muted">Informasi terkini seputar MTsN 10 Tasikmalaya</p>
     </div>
 
     <div class="row g-4">
@@ -97,7 +91,8 @@
                         <p class="card-text text-muted">
                             {{ \Illuminate\Support\Str::limit(strip_tags($item->isi), 100) }}
                         </p>
-                        <a href="{{ url('/news/'.$item->id_berita) }}" class="btn btn-outline-success btn-sm">Selengkapnya</a>
+                        <a href="{{ url('/news/'.$item->id_berita) }}" 
+                           class="btn btn-outline-success btn-sm">Selengkapnya</a>
                     </div>
                     <div class="card-footer text-muted small">
                         {{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d F Y') }}
@@ -125,16 +120,26 @@
         text-shadow: 0 2px 6px rgba(0,0,0,0.7);
     }
 
-    /* Logo & Teks */
+    /* Logo & teks */
     .logo-carousel {
         max-height: 170px;
         animation: fadeInUp 1.2s ease-in-out;
     }
-    .title-carousel { color: #FFD700; animation: fadeInRight 1.4s ease-in-out; }
-    .subtitle-carousel { font-size: 1.25rem; animation: fadeInLeft 1.6s ease-in-out; }
+    .title-carousel {
+        color: #FFD700;
+        animation: fadeInRight 1.4s ease-in-out;
+    }
+    .subtitle-carousel {
+        font-size: 1.25rem;
+        animation: fadeInLeft 1.6s ease-in-out;
+    }
 
-    /* Divider */
-    .divider { width: 100%; height: 5px; background-color: #555; margin: 2rem 0; }
+    /* Garis pembatas */
+    .divider {
+        width: 100%;
+        height: 5px;
+        background-color: #555;
+    }
 
     /* Section Title */
     .section-title {
@@ -164,14 +169,32 @@
         transform: translateY(-6px);
         box-shadow: 0 6px 20px rgba(0,0,0,0.18);
     }
-    .news-card img { height: 200px; object-fit: cover; }
-    .news-card .card-title { font-weight: 600; color: #145a32; }
-    .news-card .btn { border-radius: 20px; padding: 4px 14px; }
+    .news-card img {
+        height: 200px;
+        object-fit: cover;
+    }
+    .news-card .card-title {
+        font-weight: 600;
+        color: #145a32;
+    }
+    .news-card .btn {
+        border-radius: 20px;
+        padding: 4px 14px;
+    }
 
     /* Animasi */
-    @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeInRight { from { opacity: 0; transform: translateX(-40px); } to { opacity: 1; transform: translateX(0); } }
-    @keyframes fadeInLeft { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(40px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInRight {
+        from { opacity: 0; transform: translateX(-40px); }
+        to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeInLeft {
+        from { opacity: 0; transform: translateX(40px); }
+        to   { opacity: 1; transform: translateX(0); }
+    }
 </style>
 
 @endsection

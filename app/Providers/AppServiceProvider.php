@@ -22,13 +22,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if (Schema::hasTable('schoolProfile'))
-        {
-            // Ambil data School Profile pertama
+        if (Schema::hasTable('school_profiles')) {
             $profile = SchoolProfile::first();
-
-            // Share ke semua blade
             View::share('schoolProfile', $profile);
+        } else {
+            View::share('schoolProfile', null);
         }
     }
 }

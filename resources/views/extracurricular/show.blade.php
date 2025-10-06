@@ -3,6 +3,7 @@
 @section('title', $extracurricular->nama_ekskul)
 
 @section('content')
+<div class="container" style="height: 20px"></div>
 <div class="container mt-4">
     <h2 class="text-success">{{ $extracurricular->nama_ekskul }}</h2>
 

@@ -3,6 +3,7 @@
 @section('title', $article->judul)
 
 @section('content')
+<div class="container" style="height: 20px"></div>
 <div class="container mt-4">
     <h2 class="text-success">{{ $article->judul }}</h2>
     <p class="text-muted">Published: {{ \Carbon\Carbon::parse($article->tanggal)->format('d M Y') }}</p>
