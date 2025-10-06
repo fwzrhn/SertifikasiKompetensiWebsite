@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SchoolProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
-    // form login admin
+    // form login
     public function showLoginForm()
     {
-        return view('admin.login'); // buat file resources/views/admin/login.blade.php
+        return view('admin.login');
     }
 
-    // proses login admin
+    // proses login
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -24,12 +25,17 @@ class AdminController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            if (Auth::user()->role === 'admin') {
-                return redirect()->intended('/admin/dashboard');
+            $role = Auth::user()->role;
+
+            // arahkan sesuai role
+            if ($role === 'admin') {
+                return redirect()->intended('/administrator');
+            } elseif ($role === 'operator') {
+                return redirect()->intended('/operator  ');
             } else {
                 Auth::logout();
                 return redirect()->route('admin.login')
-                    ->withErrors(['username' => 'Hanya admin yang boleh login.']);
+                    ->withErrors(['username' => 'Anda tidak memiliki akses ke sistem ini.']);
             }
         }
 
@@ -48,9 +54,11 @@ class AdminController extends Controller
         return redirect('/')->with('success', 'Anda berhasil logout.');
     }
 
-    // halaman dashboard admin
+    // dashboard admin
     public function dashboard()
     {
+        $profile = SchoolProfile::first();
+
         $studentCount = \App\Models\Student::count();
         $teacherCount = \App\Models\Teacher::count();
         $newsCount = \App\Models\News::count();
@@ -65,9 +73,8 @@ class AdminController extends Controller
 
         return view('admin.dashboard', compact(
             'studentCount', 'teacherCount', 'newsCount', 'extracurricularCount', 'galleryCount',
-            'latestStudents', 'latestTeachers', 'latestNews', 'latestExtracurricular', 'latestGallery'
+            'latestStudents', 'latestTeachers', 'latestNews', 'latestExtracurricular', 'latestGallery',
+            'profile'
         ));
     }
-
-    
 }

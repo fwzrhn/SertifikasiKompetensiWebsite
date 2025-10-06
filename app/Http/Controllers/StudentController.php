@@ -53,4 +53,13 @@ class StudentController extends Controller
 
         return redirect()->route('students.index')->with('success', 'Data siswa berhasil dihapus!');
     }
+    public function publicIndex()
+    {
+        $students = \App\Models\Student::all();
+        $schoolProfile = \App\Models\SchoolProfile::first();
+
+        return view('students.index', compact('students', 'schoolProfile'));
+    }
+
+
 }

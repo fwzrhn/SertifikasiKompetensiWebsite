@@ -77,4 +77,12 @@ class TeacherController extends Controller
 
         return redirect()->route('teachers.index')->with('success', 'Guru berhasil dihapus.');
     }
+    public function publicIndex()
+    {
+        $teachers = \App\Models\Teacher::all();
+        $schoolProfile = \App\Models\SchoolProfile::first();
+
+        return view('teachers.index', compact('teachers', 'schoolProfile'));
+    }
+
 }

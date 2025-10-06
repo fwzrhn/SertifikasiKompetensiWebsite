@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\SchoolProfile;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -30,6 +31,30 @@ class DatabaseSeeder extends Seeder
                 'role' => 'user',
             ]
         );
+
+        // Buat akun operator default
+        User::firstOrCreate(
+            ['username' => 'operator'], 
+            [
+                'name' => 'Operator Sekolah',
+                'password' => Hash::make('operator123'),
+                'role' => 'operator',
+            ]
+        );
+
+
+        SchoolProfile::create([
+            'nama_sekolah'   => 'MTsN 10 Tasikmalaya',
+            'kepala_sekolah' => 'Drs. H. Ahmad Fauzi, M.Pd',
+            'foto'           => 'default-foto.jpg',   
+            'logo'           => 'default-logo.png',   
+            'npsn'           => '12345678',
+            'alamat'         => 'Jl. Pendidikan No. 10, Tasikmalaya',
+            'kontak'         => '081234567890',
+            'visi_misi'      => 'Menjadi madrasah unggul dalam prestasi dan berakhlak mulia.',
+            'tahun_berdiri'  => 1990,
+            'deskripsi'      => 'MTsN 10 Tasikmalaya merupakan madrasah tsanawiyah negeri dengan komitmen mencetak generasi Islami berprestasi.',
+        ]);
 
         // Tambah 30 siswa
         DB::table('students')->insert([

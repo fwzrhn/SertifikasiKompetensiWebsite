@@ -83,4 +83,20 @@ class GalleryController extends Controller
 
         return redirect()->route('galleries.index')->with('success', 'Galeri berhasil dihapus!');
     }
+    public function publicIndex()
+    {
+        $galleries = \App\Models\Gallery::latest('tanggal')->paginate(9);
+        $schoolProfile = \App\Models\SchoolProfile::first();
+
+        return view('galleries.index', compact('galleries', 'schoolProfile'));
+    }
+
+    public function show($id)
+    {
+        $gallery = \App\Models\Gallery::findOrFail($id);
+        $schoolProfile = \App\Models\SchoolProfile::first();
+
+        return view('galleries.show', compact('gallery', 'schoolProfile'));
+    }
+
 }

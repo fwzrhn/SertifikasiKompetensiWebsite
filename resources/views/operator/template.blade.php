@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - @yield('title', $schoolProfile?->nama_sekolah ?? 'School Website')</title>
+    <title>Operator - @yield('title', $schoolProfile?->nama_sekolah ?? 'School Website')</title>
 
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -12,12 +12,12 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 
     <style>
-        body { background-color: #f4f6f9; margin: 0; padding: 0; }
+        body { background-color: #f8f9fa; margin: 0; padding: 0; }
 
         /* Sidebar */
         .sidebar {
             width: 240px;
-            background: #0f2e1f;
+            background: #1a3a29;
             color: #fff;
             min-height: 100vh;
             position: fixed;
@@ -28,18 +28,18 @@
             flex-direction: column;
         }
         .sidebar .nav-link {
-            color: #ddd;
+            color: #d5d5d5;
             padding: 10px 20px;
             display: block;
             transition: 0.2s;
         }
         .sidebar .nav-link.active {
-            background-color: #1a5e3d;
-            font-weight: bold;
+            background-color: #26734d;
             color: #fff;
+            font-weight: bold;
         }
         .sidebar .nav-link:hover {
-            background-color: #2e7d50;
+            background-color: #34885c;
             color: #fff;
         }
         .sidebar .navbar-brand {
@@ -65,7 +65,7 @@
 
         /* Footer */
         footer {
-            background-color: #0f2e1f;
+            background-color: #1a3a29;
             color: #fff;
             padding: 12px 0;
             margin-left: 240px;
@@ -80,41 +80,32 @@
 
     <!-- Sidebar -->
     <div class="sidebar">
-        <a class="navbar-brand" href="{{ route('admin.dashboard') }}">
-            {{-- Logo dari DB --}}
+        <a class="navbar-brand" href="{{ route('operator.dashboard') }}">
             @if($schoolProfile?->logo)
                 <img src="{{ asset($schoolProfile->logo) }}" alt="Logo">
             @endif
-            {{-- Nama sekolah dari DB --}}
             {{ $schoolProfile?->nama_sekolah ?? 'Nama Sekolah' }}
         </a>
+
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link {{ request()->is('administrator/school-profile*') ? 'active' : '' }}" href="{{ route('school-profile.index') }}">🏫 School Profile</a>
+                <a class="nav-link {{ request()->is('operator/students*') ? 'active' : '' }}" href="{{ route('operator.students.index') }}">👨‍🎓 Students</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request()->is('administrator/students*') ? 'active' : '' }}" href="{{ route('students.index') }}">👨‍🎓 Students</a>
+                <a class="nav-link {{ request()->is('operator/teachers*') ? 'active' : '' }}" href="{{ route('operator.teachers.index') }}">👨‍🏫 Teachers</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request()->is('administrator/teachers*') ? 'active' : '' }}" href="{{ route('teachers.index') }}">👨‍🏫 Teachers</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ request()->is('administrator/extracurriculars*') ? 'active' : '' }}" href="{{ route('extracurricular.index') }}">🎯 Extracurricular</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ request()->is('administrator/news*') ? 'active' : '' }}" href="{{ route('news.index') }}">📰 News</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ request()->is('administrator/galleries*') ? 'active' : '' }}" href="{{ route('galleries.index') }}">🖼️ Gallery</a>
+                <a class="nav-link {{ request()->is('operator/news*') ? 'active' : '' }}" href="{{ route('operator.news.index') }}">📰 News</a>
             </li>
         </ul>
+
         <div class="mt-auto p-3">
             <div class="text-white mb-2">
-                👋 Halo, {{ auth()->check() ? auth()->user()->username : 'Admin' }}
+                👋 Halo, {{ auth()->user()->username ?? 'Operator' }}
             </div>
-            <form action="{{ route('admin.logout') }}" method="POST">
+            <form action="{{ route('operator.logout') }}" method="POST" style="display:inline;">
                 @csrf
-                <button type="submit" class="btn btn-outline-light btn-sm fw-bold w-100">Logout</button>
+                <button type="submit" class="dropdown-item">Logout</button>
             </form>
         </div>
     </div>
@@ -126,9 +117,7 @@
 
     <!-- Footer -->
     <footer>
-        <small>
-            © {{ date('Y') }} {{ $schoolProfile?->nama_sekolah ?? 'MTsN 10' }} | Ikhlas Beramal
-        </small>
+        <small>© {{ date('Y') }} {{ $schoolProfile?->nama_sekolah ?? 'MTsN 10' }} | Operator Panel</small>
     </footer>
 
     <!-- Scripts -->

@@ -35,7 +35,7 @@
     <div class="card shadow" style="width: 400px;">
         <div class="card-header">
             MTsN 10 Tasikmalaya <br>
-            <small class="fw-normal">Login Admin</small>
+            <small class="fw-normal">Login Sistem</small>
         </div>
         <div class="card-body p-4">
             

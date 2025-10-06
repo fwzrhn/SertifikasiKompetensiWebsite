@@ -1,13 +1,13 @@
-@extends('admin.template')
+@extends('operator.template')
 
-@section('title', 'Dashboard Admin')
+@section('title', 'Dashboard Operator')
 
 @section('content')
 <div class="container mt-4">
-    <h2 class="mb-3 fw-bold text-success">📊 Dashboard Admin</h2>
+    <h2 class="mb-3 fw-bold text-success">📊 Dashboard Operator</h2>
     <p class="text-muted">
         Halo, <strong>{{ Auth::user()->name }}</strong> 👋.  
-        Anda login sebagai <span class="badge bg-success">Administrator</span>.
+        Anda login sebagai <span class="badge bg-success">Operator</span>.
     </p>
 
     <!-- Ringkasan Data -->
@@ -15,54 +15,40 @@
         <div class="col-md-2 mb-3">
             <div class="card shadow-sm border-0">
                 <div class="card-body">
-                    <i class="bi bi-people-fill fs-3 text-success"></i>
                     <h5 class="fw-bold text-success">{{ $studentCount }}</h5>
                     <p class="mb-0">Siswa</p>
-                    <a href="{{ route('students.index') }}" class="btn btn-sm btn-success mt-2">Detail</a>
                 </div>
             </div>
         </div>
-
         <div class="col-md-2 mb-3">
             <div class="card shadow-sm border-0">
                 <div class="card-body">
-                    <i class="bi bi-person-badge-fill fs-3 text-success"></i>
                     <h5 class="fw-bold text-success">{{ $teacherCount }}</h5>
                     <p class="mb-0">Guru</p>
-                    <a href="{{ route('teachers.index') }}" class="btn btn-sm btn-success mt-2">Detail</a>
                 </div>
             </div>
         </div>
-
         <div class="col-md-2 mb-3">
             <div class="card shadow-sm border-0">
                 <div class="card-body">
-                    <i class="bi bi-newspaper fs-3 text-success"></i>
                     <h5 class="fw-bold text-success">{{ $newsCount }}</h5>
                     <p class="mb-0">Berita</p>
-                    <a href="{{ route('news.index') }}" class="btn btn-sm btn-success mt-2">Detail</a>
                 </div>
             </div>
         </div>
-
         <div class="col-md-2 mb-3">
             <div class="card shadow-sm border-0">
                 <div class="card-body">
-                    <i class="bi bi-dribbble fs-3 text-success"></i>
                     <h5 class="fw-bold text-success">{{ $extracurricularCount }}</h5>
-                    <p class="mb-0">Ekskul</p>
-                    <a href="{{ route('extracurricular.index') }}" class="btn btn-sm btn-success mt-2">Detail</a>
+                    <p class="mb-0">Ekstrakurikuler</p>
                 </div>
             </div>
         </div>
-
         <div class="col-md-2 mb-3">
             <div class="card shadow-sm border-0">
                 <div class="card-body">
-                    <i class="bi bi-images fs-3 text-success"></i>
                     <h5 class="fw-bold text-success">{{ $galleryCount }}</h5>
                     <p class="mb-0">Galeri</p>
-                    <a href="{{ route('galleries.index') }}" class="btn btn-sm btn-success mt-2">Detail</a>
                 </div>
             </div>
         </div>
@@ -87,7 +73,6 @@
                 </div>
             </div>
         </div>
-
         <div class="col-md-6 mb-3">
             <div class="card border-0 shadow-sm">
                 <div class="card-header bg-success text-white">Berita Terbaru</div>

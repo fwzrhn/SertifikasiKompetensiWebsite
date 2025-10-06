@@ -12,8 +12,10 @@ class HomeController extends Controller
     {
         $students = Student::orderBy('created_at', 'desc')->get();
         $teachers = Teacher::orderBy('created_at', 'desc')->get();
-        $news = News::orderBy('tanggal', 'desc')->get();
-        return view('home', compact('students', 'teachers'));
+        // ambil semua berita (atau batasi mis. take(6) kalau mau)
+        $news = News::orderBy('tanggal', 'desc')->take(3);
+
+        // kirim $news juga ke view
+        return view('home', compact('students', 'teachers', 'news'));
     }
 }
-

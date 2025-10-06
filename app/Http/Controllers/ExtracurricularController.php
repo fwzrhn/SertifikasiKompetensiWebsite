@@ -4,38 +4,42 @@ namespace App\Http\Controllers;
 
 use App\Models\Extracurricular;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ExtracurricularController extends Controller
 {
     public function index()
     {
-        // Gunakan nama variabel yang sama dengan Blade
-        $extracurricular = Extracurricular::all();
-        return view('admin.extracurricular.index', compact('extracurricular'));
+        $extracurriculars = Extracurricular::latest()->get();
+        return view('admin.extracurricular.index', compact('extracurriculars'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'nama_ekskul' => 'required|max:40',
-            'pembina' => 'required|max:40',
-            'jadwal_latihan' => 'required|max:40',
+            'nama_ekskul' => 'required|max:100',
+            'pembina' => 'required|max:100',
+            'jadwal_latihan' => 'required|max:100',
             'deskripsi' => 'required',
-            'gambar' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $filename = time() . '.' . $request->gambar->extension();
-        $request->gambar->move(public_path('uploads/ekskul'), $filename);
+        $path = null;
+        if ($request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+            $filename = time().'_'.uniqid().'.'.$file->getClientOriginalExtension();
+            $path = $file->storeAs('extracurriculars', $filename, 'public');
+        }
 
         Extracurricular::create([
             'nama_ekskul' => $request->nama_ekskul,
             'pembina' => $request->pembina,
             'jadwal_latihan' => $request->jadwal_latihan,
             'deskripsi' => $request->deskripsi,
-            'gambar' => $filename,
+            'gambar' => $path,
         ]);
 
-        return redirect()->route('extracurricular.index')->with('success', 'Ekskul berhasil ditambahkan.');
+        return redirect()->route('extracurricular.index')->with('success', 'Ekskul berhasil ditambahkan!');
     }
 
     public function update(Request $request, $id)
@@ -43,37 +47,59 @@ class ExtracurricularController extends Controller
         $ekskul = Extracurricular::findOrFail($id);
 
         $request->validate([
-            'nama_ekskul' => 'required|max:40',
-            'pembina' => 'required|max:40',
-            'jadwal_latihan' => 'required|max:40',
+            'nama_ekskul' => 'required|max:100',
+            'pembina' => 'required|max:100',
+            'jadwal_latihan' => 'required|max:100',
             'deskripsi' => 'required',
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $data = $request->only(['nama_ekskul', 'pembina', 'jadwal_latihan', 'deskripsi']);
-
         if ($request->hasFile('gambar')) {
-            $filename = time() . '.' . $request->gambar->extension();
-            $request->gambar->move(public_path('uploads/ekskul'), $filename);
-            $data['gambar'] = $filename;
+            if ($ekskul->gambar) {
+                Storage::disk('public')->delete($ekskul->gambar);
+            }
+            $file = $request->file('gambar');
+            $filename = time().'_'.uniqid().'.'.$file->getClientOriginalExtension();
+            $path = $file->storeAs('extracurriculars', $filename, 'public');
         }
 
-        $ekskul->update($data);
+        $ekskul->update([
+            'nama_ekskul' => $request->nama_ekskul,
+            'pembina' => $request->pembina,
+            'jadwal_latihan' => $request->jadwal_latihan,
+            'deskripsi' => $request->deskripsi,
+            'gambar' => $path,
+        ]);
 
-        return redirect()->route('extracurricular.index')->with('success', 'Ekskul berhasil diperbarui.');
+        return redirect()->route('extracurricular.index')->with('success', 'Ekskul berhasil diperbarui!');
     }
 
     public function destroy($id)
     {
         $ekskul = Extracurricular::findOrFail($id);
 
-        $path = public_path('uploads/ekskul/' . $ekskul->gambar);
-        if (file_exists($path)) {
-            unlink($path);
+        if ($ekskul->gambar) {
+            Storage::disk('public')->delete($ekskul->gambar);
         }
 
         $ekskul->delete();
 
-        return redirect()->route('extracurricular.index')->with('success', 'Ekskul berhasil dihapus.');
+        return redirect()->route('extracurricular.index')->with('success', 'Ekskul berhasil dihapus!');
     }
+    public function publicIndex()
+    {
+        $extracurriculars = \App\Models\Extracurricular::latest()->get();
+        $schoolProfile = \App\Models\SchoolProfile::first();
+
+        return view('extracurricular.index', compact('extracurriculars', 'schoolProfile'));
+    }
+
+    public function show($id)
+    {
+        $extracurricular = \App\Models\Extracurricular::findOrFail($id);
+        $schoolProfile = \App\Models\SchoolProfile::first();
+
+        return view('extracurricular.show', compact('extracurricular', 'schoolProfile'));
+    }
+
 }

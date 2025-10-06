@@ -81,4 +81,20 @@ class NewsController extends Controller
 
         return redirect()->route('news.index')->with('success', 'Berita berhasil dihapus!');
     }
+    public function publicIndex()
+    {
+        $news = News::latest('tanggal')->paginate(6); // paginate biar rapi
+        $schoolProfile = \App\Models\SchoolProfile::first();
+
+        return view('news.index', compact('news', 'schoolProfile'));
+    }
+
+    public function show($id)
+    {
+        $article = News::findOrFail($id);
+        $schoolProfile = \App\Models\SchoolProfile::first();
+
+        return view('news.show', compact('article', 'schoolProfile'));
+    }
+
 }
