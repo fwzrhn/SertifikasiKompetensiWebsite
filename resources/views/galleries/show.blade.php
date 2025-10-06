@@ -4,6 +4,7 @@
 
 @section('content')
 <div class="container" style="height: 20px"></div>
+
 <div class="container my-5">
     <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
         <div class="card-body p-4">
@@ -17,11 +18,29 @@
                 <hr class="w-25 mx-auto border-success opacity-50">
             </div>
 
-            @if($gallery->file)
+            {{-- tampilkan file sesuai kategori --}}
+            @if($gallery->kategori === 'Video' && $gallery->file)
+                @php
+                    $ext = pathinfo($gallery->file, PATHINFO_EXTENSION);
+                @endphp
                 <div class="text-center mb-4">
-                    <img src="{{ asset('storage/' . $gallery->file) }}" 
-                         class="img-fluid rounded-4 shadow-sm" 
-                         alt="{{ $gallery->judul }}" 
+                    <video controls class="rounded-4 shadow-sm" style="max-height: 480px; width:100%; object-fit:cover;">
+                        <source src="{{ asset('storage/' . $gallery->file) }}" type="video/{{ strtolower($ext) }}">
+                        Browser kamu tidak mendukung pemutar video.
+                    </video>
+                </div>
+            @elseif($gallery->file)
+                <div class="text-center mb-4">
+                    <img src="{{ asset('storage/' . $gallery->file) }}"
+                         class="img-fluid rounded-4 shadow-sm"
+                         alt="{{ $gallery->judul }}"
+                         style="max-height: 480px; object-fit: cover;">
+                </div>
+            @else
+                <div class="text-center mb-4">
+                    <img src="{{ asset('assets/image/default-gallery.png') }}"
+                         class="img-fluid rounded-4 shadow-sm"
+                         alt="Default Gallery"
                          style="max-height: 480px; object-fit: cover;">
                 </div>
             @endif
@@ -33,7 +52,7 @@
             </div>
 
             <div class="text-center mt-5">
-                <a href="{{ route('public.galleries.index') }}" 
+                <a href="{{ route('public.galleries.index') }}"
                    class="btn btn-outline-success rounded-pill px-4 py-2">
                     ← Kembali ke Galeri
                 </a>

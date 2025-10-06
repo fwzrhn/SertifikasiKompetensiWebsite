@@ -38,19 +38,37 @@ Route::get('/galleries/{id}', [GalleryController::class, 'show'])->name('public.
 Route::get('/extracurriculars', [ExtracurricularController::class, 'publicIndex'])->name('public.extracurricular.index');
 Route::get('/extracurriculars/{id}', [ExtracurricularController::class, 'show'])->name('public.extracurricular.show');
 
-// School Profile (Public)
+// School Profile
 Route::get('/school-profile', [SchoolProfileController::class, 'show'])->name('school-profile.show');
 
 
 /*
 |--------------------------------------------------------------------------
-| Auth Routes
+| Default login redirect (fix: Route [login] not defined)
 |--------------------------------------------------------------------------
 */
-Route::get('/login', [AdminController::class, 'showLoginForm'])->name('login');
+
+Route::get('/login', function () {
+    // default redirect ke admin login
+    return redirect()->route('admin.login');
+})->name('login');
+
+
+/*
+|--------------------------------------------------------------------------
+| Authentication Routes (Admin & Operator)
+|--------------------------------------------------------------------------
+*/
+
+// Admin login
 Route::get('/admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login.post');
 Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
+
+// Operator login
+Route::get('/operator/login', [OperatorController::class, 'showLoginForm'])->name('operator.login');
+Route::post('/operator/login', [OperatorController::class, 'login'])->name('operator.login.post');
+Route::post('/operator/logout', [OperatorController::class, 'logout'])->name('operator.logout');
 
 
 /*
@@ -58,9 +76,10 @@ Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.lo
 | Admin Routes (Protected by auth & admin middleware)
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth', 'admin'])->prefix('administrator')->group(function () {
+
+Route::middleware(['auth.redirect', 'auth', 'admin'])->prefix('administrator')->group(function () {
     Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-    
+
     // School Profile
     Route::get('/school-profile', [SchoolProfileController::class, 'index'])->name('school-profile.index');
     Route::put('/school-profile/{id}', [SchoolProfileController::class, 'update'])->name('school-profile.update');
@@ -96,32 +115,20 @@ Route::middleware(['auth', 'admin'])->prefix('administrator')->group(function ()
     Route::delete('/galleries/{id}', [GalleryController::class, 'destroy'])->name('galleries.destroy');
 });
 
+
 /*
 |--------------------------------------------------------------------------
 | Operator Routes (Protected by auth & operator middleware)
 |--------------------------------------------------------------------------
 */
 
-Route::middleware(['auth', 'operator'])->prefix('operator')->group(function () {
-    Route::get('/', [OperatorController::class, 'dashboard'])->name('operator.home');
-    Route::get('/dashboard', [OperatorController::class, 'dashboard'])->name('operator.dashboard');
+Route::middleware(['auth.redirect', 'auth', 'operator'])->prefix('operator')->group(function () {
+    Route::get('/', [OperatorController::class, 'dashboard'])->name('operator.dashboard');
 
-    // Operator hanya bisa melihat & edit (tanpa delete atau tambah)
+    // fitur operator
     Route::get('/students', [StudentController::class, 'index'])->name('operator.students.index');
-    Route::put('/students/update/{id}', [StudentController::class, 'update'])->name('operator.students.update');
-
     Route::get('/teachers', [TeacherController::class, 'index'])->name('operator.teachers.index');
-    Route::put('/teachers/update/{id}', [TeacherController::class, 'update'])->name('operator.teachers.update');
-
     Route::get('/news', [NewsController::class, 'index'])->name('operator.news.index');
-    Route::put('/news/update/{id}', [NewsController::class, 'update'])->name('operator.news.update');
-
     Route::get('/extracurricular', [ExtracurricularController::class, 'index'])->name('operator.extracurricular.index');
-    Route::put('/extracurricular/update/{id}', [ExtracurricularController::class, 'update'])->name('operator.extracurricular.update');
-
     Route::get('/galleries', [GalleryController::class, 'index'])->name('operator.galleries.index');
-    Route::put('/galleries/{id}', [GalleryController::class, 'update'])->name('operator.galleries.update');
-
-    // 👇 Tambahkan ini
-    Route::post('/logout', [OperatorController::class, 'logout'])->name('operator.logout');
 });

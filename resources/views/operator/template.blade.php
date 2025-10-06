@@ -12,12 +12,12 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 
     <style>
-        body { background-color: #f8f9fa; margin: 0; padding: 0; }
+        body { background-color: #f4f6f9; margin: 0; padding: 0; }
 
         /* Sidebar */
         .sidebar {
             width: 240px;
-            background: #1a3a29;
+            background: #0f2e1f;
             color: #fff;
             min-height: 100vh;
             position: fixed;
@@ -28,18 +28,18 @@
             flex-direction: column;
         }
         .sidebar .nav-link {
-            color: #d5d5d5;
+            color: #ddd;
             padding: 10px 20px;
             display: block;
             transition: 0.2s;
         }
         .sidebar .nav-link.active {
-            background-color: #26734d;
-            color: #fff;
+            background-color: #1a5e3d;
             font-weight: bold;
+            color: #fff;
         }
         .sidebar .nav-link:hover {
-            background-color: #34885c;
+            background-color: #2e7d50;
             color: #fff;
         }
         .sidebar .navbar-brand {
@@ -65,7 +65,7 @@
 
         /* Footer */
         footer {
-            background-color: #1a3a29;
+            background-color: #0f2e1f;
             color: #fff;
             padding: 12px 0;
             margin-left: 240px;
@@ -95,17 +95,23 @@
                 <a class="nav-link {{ request()->is('operator/teachers*') ? 'active' : '' }}" href="{{ route('operator.teachers.index') }}">👨‍🏫 Teachers</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link {{ request()->is('operator/extracurricular*') ? 'active' : '' }}" href="{{ route('operator.extracurricular.index') }}">🎯 Extracurricular</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link {{ request()->is('operator/news*') ? 'active' : '' }}" href="{{ route('operator.news.index') }}">📰 News</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->is('operator/galleries*') ? 'active' : '' }}" href="{{ route('operator.galleries.index') }}">🖼️ Gallery</a>
             </li>
         </ul>
 
         <div class="mt-auto p-3">
             <div class="text-white mb-2">
-                👋 Halo, {{ auth()->user()->username ?? 'Operator' }}
+                👋 Halo, {{ auth()->check() ? auth()->user()->username : 'Operator' }}
             </div>
-            <form action="{{ route('operator.logout') }}" method="POST" style="display:inline;">
+            <form action="{{ route('operator.logout') }}" method="POST">
                 @csrf
-                <button type="submit" class="dropdown-item">Logout</button>
+                <button type="submit" class="btn btn-outline-light btn-sm fw-bold w-100">Logout</button>
             </form>
         </div>
     </div>
@@ -117,7 +123,9 @@
 
     <!-- Footer -->
     <footer>
-        <small>© {{ date('Y') }} {{ $schoolProfile?->nama_sekolah ?? 'MTsN 10' }} | Operator Panel</small>
+        <small>
+            © {{ date('Y') }} {{ $schoolProfile?->nama_sekolah ?? 'MTsN 10' }} | Ikhlas Beramal
+        </small>
     </footer>
 
     <!-- Scripts -->

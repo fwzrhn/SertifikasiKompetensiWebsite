@@ -4,6 +4,7 @@
 
 @section('content')
 <div class="container" style="height: 20px"></div>
+
 <div class="container mt-4">
     <h2 class="mb-4 text-success">📸 School Gallery</h2>
 
@@ -11,15 +12,33 @@
         @foreach($galleries as $item)
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow-sm">
-                    @if($item->file)
-                        <img src="{{ asset('storage/' . $item->file) }}" class="card-img-top" alt="{{ $item->judul }}" style="height:220px; object-fit:cover;">
+
+                    {{-- tampilkan foto atau video --}}
+                    @if($item->kategori === 'Video' && $item->file)
+                        @php
+                            $ext = pathinfo($item->file, PATHINFO_EXTENSION);
+                        @endphp
+                        <video controls class="card-img-top" style="height:220px; object-fit:cover;">
+                            <source src="{{ asset('storage/' . $item->file) }}" type="video/{{ strtolower($ext) }}">
+                            Browser kamu tidak mendukung tag video.
+                        </video>
+                    @elseif($item->file)
+                        <img src="{{ asset('storage/' . $item->file) }}"
+                             class="card-img-top"
+                             alt="{{ $item->judul }}"
+                             style="height:220px; object-fit:cover;">
                     @else
-                        <img src="{{ asset('assets/image/default-gallery.png') }}" class="card-img-top" alt="Gallery" style="height:220px; object-fit:cover;">
+                        <img src="{{ asset('assets/image/default-gallery.png') }}"
+                             class="card-img-top"
+                             alt="Gallery"
+                             style="height:220px; object-fit:cover;">
                     @endif
 
                     <div class="card-body">
                         <h5 class="card-title">{{ $item->judul }}</h5>
-                        <p class="card-text text-muted">{{ \Illuminate\Support\Str::limit($item->keterangan, 80) }}</p>
+                        <p class="card-text text-muted">
+                            {{ \Illuminate\Support\Str::limit($item->keterangan, 80) }}
+                        </p>
                         <a href="{{ route('public.galleries.show', $item->id_galeri) }}" class="btn btn-sm btn-success">View</a>
                     </div>
 

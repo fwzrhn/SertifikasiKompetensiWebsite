@@ -3,18 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\SchoolProfile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
 {
-    // Tampilkan semua siswa
+    /**
+     * Menampilkan daftar siswa (admin & operator)
+     */
     public function index()
     {
         $students = Student::orderBy('created_at', 'desc')->get();
-        return view('admin.student.index', compact('students'));
+        $schoolProfile = SchoolProfile::first();
+
+        if (Auth::user()->role === 'operator') {
+            return view('operator.student.index', compact('students', 'schoolProfile'));
+        }
+
+        return view('admin.student.index', compact('students', 'schoolProfile'));
     }
 
-    // Simpan siswa baru
+    /**
+     * Menyimpan siswa baru (admin & operator)
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -26,10 +38,13 @@ class StudentController extends Controller
 
         Student::create($request->all());
 
-        return redirect()->route('students.index')->with('success', 'Data siswa berhasil ditambahkan!');
+        $route = Auth::user()->role === 'operator' ? 'operator.students.index' : 'students.index';
+        return redirect()->route($route)->with('success', 'Data siswa berhasil ditambahkan!');
     }
 
-    // Update siswa
+    /**
+     * Update data siswa (admin & operator)
+     */
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -42,24 +57,30 @@ class StudentController extends Controller
         $student = Student::findOrFail($id);
         $student->update($request->all());
 
-        return redirect()->route('students.index')->with('success', 'Data siswa berhasil diperbarui!');
+        $route = Auth::user()->role === 'operator' ? 'operator.students.index' : 'students.index';
+        return redirect()->route($route)->with('success', 'Data siswa berhasil diperbarui!');
     }
 
-    // Hapus siswa
+    /**
+     * Hapus data siswa (admin & operator)
+     */
     public function destroy($id)
     {
         $student = Student::findOrFail($id);
         $student->delete();
 
-        return redirect()->route('students.index')->with('success', 'Data siswa berhasil dihapus!');
+        $route = Auth::user()->role === 'operator' ? 'operator.students.index' : 'students.index';
+        return redirect()->route($route)->with('success', 'Data siswa berhasil dihapus!');
     }
+
+    /**
+     * Halaman publik daftar siswa
+     */
     public function publicIndex()
     {
-        $students = \App\Models\Student::all();
-        $schoolProfile = \App\Models\SchoolProfile::first();
+        $students = Student::orderBy('nama_siswa')->get();
+        $schoolProfile = SchoolProfile::first();
 
         return view('students.index', compact('students', 'schoolProfile'));
     }
-
-
 }

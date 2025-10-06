@@ -2,52 +2,54 @@
 
 namespace Database\Seeders;
 
-use App\Models\SchoolProfile;
 use Illuminate\Database\Seeder;
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use App\Models\SchoolProfile;
 
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // Buat akun admin default
-        User::firstOrCreate(
-            ['username' => 'admin'], 
+        // ===============================
+        // USERS
+        // ===============================
+        User::insert([
             [
-                'name' => 'Administrator',
-                'password' => Hash::make('password123'),
-                'role' => 'admin',
-            ]
-        );
-
-        // Buat user biasa
-        User::firstOrCreate(
-            ['username' => 'user1'],
+                'name'       => 'Administrator',
+                'username'   => 'admin',
+                'password'   => Hash::make('password123'),
+                'role'       => 'admin',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
             [
-                'name' => 'User Satu',
-                'password' => Hash::make('user123'),
-                'role' => 'user',
-            ]
-        );
-
-        // Buat akun operator default
-        User::firstOrCreate(
-            ['username' => 'operator'], 
+                'name'       => 'Operator Sekolah',
+                'username'   => 'operator',
+                'password'   => Hash::make('operator123'),
+                'role'       => 'operator',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
             [
-                'name' => 'Operator Sekolah',
-                'password' => Hash::make('operator123'),
-                'role' => 'operator',
-            ]
-        );
+                'name'       => 'User Satu',
+                'username'   => 'user1',
+                'password'   => Hash::make('user123'),
+                'role'       => 'user',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
 
-
+        // ===============================
+        // SCHOOL PROFILE
+        // ===============================
         SchoolProfile::create([
             'nama_sekolah'   => 'MTsN 10 Tasikmalaya',
             'kepala_sekolah' => 'Drs. H. Ahmad Fauzi, M.Pd',
-            'foto'           => 'default-foto.jpg',   
-            'logo'           => 'default-logo.png',   
+            'foto'           => 'default-foto.jpg',
+            'logo'           => 'default-logo.png',
             'npsn'           => '12345678',
             'alamat'         => 'Jl. Pendidikan No. 10, Tasikmalaya',
             'kontak'         => '081234567890',
@@ -56,247 +58,223 @@ class DatabaseSeeder extends Seeder
             'deskripsi'      => 'MTsN 10 Tasikmalaya merupakan madrasah tsanawiyah negeri dengan komitmen mencetak generasi Islami berprestasi.',
         ]);
 
-        // Tambah 30 siswa
+        // ===============================
+        // STUDENTS
+        // ===============================
         DB::table('students')->insert([
             [
-                'nisn' => '1000000001',
-                'nama_siswa' => 'Ahmad Fauzi',
+                'nisn'          => '1000000001',
+                'nama_siswa'    => 'Ahmad Fauzi',
                 'jenis_kelamin' => 'Laki-Laki',
-                'tahun_masuk' => '2021',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'tahun_masuk'   => '2021',
+                'created_at'    => now(),
+                'updated_at'    => now(),
             ],
             [
-                'nisn' => '1000000002',
-                'nama_siswa' => 'Budi Santoso',
+                'nisn'          => '1000000002',
+                'nama_siswa'    => 'Budi Santoso',
                 'jenis_kelamin' => 'Laki-Laki',
-                'tahun_masuk' => '2020',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'tahun_masuk'   => '2020',
+                'created_at'    => now(),
+                'updated_at'    => now(),
             ],
             [
-                'nisn' => '1000000003',
-                'nama_siswa' => 'Citra Dewi',
+                'nisn'          => '1000000003',
+                'nama_siswa'    => 'Citra Dewi',
                 'jenis_kelamin' => 'Perempuan',
-                'tahun_masuk' => '2022',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'tahun_masuk'   => '2022',
+                'created_at'    => now(),
+                'updated_at'    => now(),
             ],
             [
-                'nisn' => '1000000004',
-                'nama_siswa' => 'Dian Lestari',
+                'nisn'          => '1000000004',
+                'nama_siswa'    => 'Dian Lestari',
                 'jenis_kelamin' => 'Perempuan',
-                'tahun_masuk' => '2023',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'tahun_masuk'   => '2023',
+                'created_at'    => now(),
+                'updated_at'    => now(),
             ],
             [
-                'nisn' => '1000000005',
-                'nama_siswa' => 'Eko Prasetyo',
+                'nisn'          => '1000000005',
+                'nama_siswa'    => 'Eko Prasetyo',
                 'jenis_kelamin' => 'Laki-Laki',
-                'tahun_masuk' => '2021',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'tahun_masuk'   => '2021',
+                'created_at'    => now(),
+                'updated_at'    => now(),
             ],
             [
-                'nisn' => '1000000006',
-                'nama_siswa' => 'Fitri Handayani',
+                'nisn'          => '1000000006',
+                'nama_siswa'    => 'Fitri Handayani',
                 'jenis_kelamin' => 'Perempuan',
-                'tahun_masuk' => '2020',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'tahun_masuk'   => '2020',
+                'created_at'    => now(),
+                'updated_at'    => now(),
             ],
             [
-                'nisn' => '1000000007',
-                'nama_siswa' => 'Gilang Saputra',
+                'nisn'          => '1000000007',
+                'nama_siswa'    => 'Gilang Saputra',
                 'jenis_kelamin' => 'Laki-Laki',
-                'tahun_masuk' => '2022',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'tahun_masuk'   => '2022',
+                'created_at'    => now(),
+                'updated_at'    => now(),
             ],
             [
-                'nisn' => '1000000008',
-                'nama_siswa' => 'Hana Kartika',
+                'nisn'          => '1000000008',
+                'nama_siswa'    => 'Hana Kartika',
                 'jenis_kelamin' => 'Perempuan',
-                'tahun_masuk' => '2021',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'tahun_masuk'   => '2021',
+                'created_at'    => now(),
+                'updated_at'    => now(),
             ],
             [
-                'nisn' => '1000000009',
-                'nama_siswa' => 'Indra Lesmana',
+                'nisn'          => '1000000009',
+                'nama_siswa'    => 'Indra Lesmana',
                 'jenis_kelamin' => 'Laki-Laki',
-                'tahun_masuk' => '2023',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'tahun_masuk'   => '2023',
+                'created_at'    => now(),
+                'updated_at'    => now(),
             ],
             [
-                'nisn' => '1000000010',
-                'nama_siswa' => 'Joko Susilo',
+                'nisn'          => '1000000010',
+                'nama_siswa'    => 'Joko Susilo',
                 'jenis_kelamin' => 'Laki-Laki',
-                'tahun_masuk' => '2020',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'tahun_masuk'   => '2020',
+                'created_at'    => now(),
+                'updated_at'    => now(),
             ],
+        ]);
 
+        // ===============================
+        // TEACHERS
+        // ===============================
+        DB::table('teachers')->insert([
             [
-                'nisn' => '1000000011',
-                'nama_siswa' => 'Kartini Ayu',
-                'jenis_kelamin' => 'Perempuan',
-                'tahun_masuk' => '2021',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'nama_guru' => 'Guru 1',
+                'nip'       => '1980010101',
+                'mapel'     => 'Matematika',
+                'foto'      => 'guru1.jpg',
+                'created_at'=> now(),
+                'updated_at'=> now(),
             ],
             [
-                'nisn' => '1000000012',
-                'nama_siswa' => 'Lukman Hakim',
-                'jenis_kelamin' => 'Laki-Laki',
-                'tahun_masuk' => '2022',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'nama_guru' => 'Guru 2',
+                'nip'       => '1980010102',
+                'mapel'     => 'IPA',
+                'foto'      => 'guru2.jpg',
+                'created_at'=> now(),
+                'updated_at'=> now(),
             ],
             [
-                'nisn' => '1000000013',
-                'nama_siswa' => 'Maya Sari',
-                'jenis_kelamin' => 'Perempuan',
-                'tahun_masuk' => '2023',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'nama_guru' => 'Guru 3',
+                'nip'       => '1980010103',
+                'mapel'     => 'IPS',
+                'foto'      => 'guru3.jpg',
+                'created_at'=> now(),
+                'updated_at'=> now(),
             ],
             [
-                'nisn' => '1000000014',
-                'nama_siswa' => 'Nanda Pratama',
-                'jenis_kelamin' => 'Laki-Laki',
-                'tahun_masuk' => '2020',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'nama_guru' => 'Guru 4',
+                'nip'       => '1980010104',
+                'mapel'     => 'Bahasa Indonesia',
+                'foto'      => 'guru4.jpg',
+                'created_at'=> now(),
+                'updated_at'=> now(),
             ],
             [
-                'nisn' => '1000000015',
-                'nama_siswa' => 'Olivia Putri',
-                'jenis_kelamin' => 'Perempuan',
-                'tahun_masuk' => '2021',
-                'created_at' => now(),
-                'updated_at' => now(),
+                'nama_guru' => 'Guru 5',
+                'nip'       => '1980010105',
+                'mapel'     => 'Bahasa Inggris',
+                'foto'      => 'guru5.jpg',
+                'created_at'=> now(),
+                'updated_at'=> now(),
             ],
-            [
-                'nisn' => '1000000016',
-                'nama_siswa' => 'Putra Aditya',
-                'jenis_kelamin' => 'Laki-Laki',
-                'tahun_masuk' => '2023',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nisn' => '1000000017',
-                'nama_siswa' => 'Qori Azzahra',
-                'jenis_kelamin' => 'Perempuan',
-                'tahun_masuk' => '2022',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nisn' => '1000000018',
-                'nama_siswa' => 'Rizky Ramadhan',
-                'jenis_kelamin' => 'Laki-Laki',
-                'tahun_masuk' => '2020',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nisn' => '1000000019',
-                'nama_siswa' => 'Siti Aminah',
-                'jenis_kelamin' => 'Perempuan',
-                'tahun_masuk' => '2021',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nisn' => '1000000020',
-                'nama_siswa' => 'Taufik Hidayat',
-                'jenis_kelamin' => 'Laki-Laki',
-                'tahun_masuk' => '2023',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+        ]);
 
+        // ===============================
+        // EXTRACURRICULARS
+        // ===============================
+        DB::table('extracurriculars')->insert([
             [
-                'nisn' => '1000000021',
-                'nama_siswa' => 'Umar Zain',
-                'jenis_kelamin' => 'Laki-Laki',
-                'tahun_masuk' => '2022',
+                'nama_ekskul'     => 'Pramuka',
+                'pembina'         => 'Pak Dedi',
+                'jadwal_latihan'  => 'Setiap Jumat, 14.00 - 16.00',
+                'deskripsi'       => 'Kegiatan pramuka untuk membentuk karakter disiplin dan tanggung jawab.',
+                'gambar'          => 'pramuka.jpg',
+                'created_at'      => now(),
+                'updated_at'      => now(),
+            ],
+            [
+                'nama_ekskul'     => 'Paskibra',
+                'pembina'         => 'Bu Ratna',
+                'jadwal_latihan'  => 'Setiap Sabtu, 08.00 - 10.00',
+                'deskripsi'       => 'Kegiatan baris-berbaris dan upacara bendera.',
+                'gambar'          => 'paskibra.jpg',
+                'created_at'      => now(),
+                'updated_at'      => now(),
+            ],
+            [
+                'nama_ekskul'     => 'Futsal',
+                'pembina'         => 'Pak Rudi',
+                'jadwal_latihan'  => 'Setiap Rabu, 15.00 - 17.00',
+                'deskripsi'       => 'Ekstrakurikuler olahraga futsal untuk menyalurkan bakat siswa.',
+                'gambar'          => 'futsal.jpg',
+                'created_at'      => now(),
+                'updated_at'      => now(),
+            ],
+        ]);
+
+        // ===============================
+        // GALLERIES
+        // ===============================
+        DB::table('galleries')->insert([
+            [
+                'judul'      => 'Kegiatan Pramuka',
+                'keterangan' => 'Dokumentasi kegiatan pramuka di lapangan.',
+                'file'       => 'galeri1.jpg',
+                'kategori'   => 'Foto',
+                'tanggal'    => now(),
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'nisn' => '1000000022',
-                'nama_siswa' => 'Vina Marlina',
-                'jenis_kelamin' => 'Perempuan',
-                'tahun_masuk' => '2021',
+                'judul'      => 'Lomba Futsal',
+                'keterangan' => 'Tim futsal MTsN 10 mengikuti lomba antar sekolah.',
+                'file'       => 'galeri2.jpg',
+                'kategori'   => 'Foto',
+                'tanggal'    => now(),
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'nisn' => '1000000023',
-                'nama_siswa' => 'Wahyu Firmansyah',
-                'jenis_kelamin' => 'Laki-Laki',
-                'tahun_masuk' => '2020',
+                'judul'      => 'Upacara Bendera',
+                'keterangan' => 'Suasana upacara setiap hari Senin.',
+                'file'       => 'galeri3.jpg',
+                'kategori'   => 'Foto',
+                'tanggal'    => now(),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
+
+        // ===============================
+        // NEWS
+        // ===============================
+        DB::table('news')->insert([
+            [
+                'judul'      => 'Siswa MTsN 10 Raih Juara 1 Lomba Sains',
+                'isi'        => 'Salah satu siswa MTsN 10 Tasikmalaya berhasil meraih juara pertama dalam lomba sains tingkat kabupaten.',
+                'tanggal'    => now(),
+                'gambar'     => 'berita1.jpg',
+                'id_user'    => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'nisn' => '1000000024',
-                'nama_siswa' => 'Xaviera Putri',
-                'jenis_kelamin' => 'Perempuan',
-                'tahun_masuk' => '2023',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nisn' => '1000000025',
-                'nama_siswa' => 'Yoga Prabowo',
-                'jenis_kelamin' => 'Laki-Laki',
-                'tahun_masuk' => '2022',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nisn' => '1000000026',
-                'nama_siswa' => 'Zahra Anindya',
-                'jenis_kelamin' => 'Perempuan',
-                'tahun_masuk' => '2020',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nisn' => '1000000027',
-                'nama_siswa' => 'Andi Saputra',
-                'jenis_kelamin' => 'Laki-Laki',
-                'tahun_masuk' => '2021',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nisn' => '1000000028',
-                'nama_siswa' => 'Bella Safira',
-                'jenis_kelamin' => 'Perempuan',
-                'tahun_masuk' => '2022',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nisn' => '1000000029',
-                'nama_siswa' => 'Charlie Wijaya',
-                'jenis_kelamin' => 'Laki-Laki',
-                'tahun_masuk' => '2023',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'nisn' => '1000000030',
-                'nama_siswa' => 'Dewi Lestari',
-                'jenis_kelamin' => 'Perempuan',
-                'tahun_masuk' => '2021',
+                'judul'      => 'Kegiatan Donor Darah di Sekolah',
+                'isi'        => 'MTsN 10 Tasikmalaya bekerja sama dengan PMI mengadakan kegiatan donor darah.',
+                'tanggal'    => now(),
+                'gambar'     => 'berita2.jpg',
+                'id_user'    => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

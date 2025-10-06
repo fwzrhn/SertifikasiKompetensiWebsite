@@ -89,9 +89,9 @@
             {{ $schoolProfile?->nama_sekolah ?? 'Nama Sekolah' }}
         </a>
         <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link {{ request()->is('administrator/school-profile*') ? 'active' : '' }}" href="{{ route('school-profile.index') }}">🏫 School Profile</a>
-            </li>
+            @if(Auth::user()->role === 'admin')
+                <li><a href="{{ route('profile.index') }}">🏫   Profil Sekolah</a></li>
+            @endif
             <li class="nav-item">
                 <a class="nav-link {{ request()->is('administrator/students*') ? 'active' : '' }}" href="{{ route('students.index') }}">👨‍🎓 Students</a>
             </li>

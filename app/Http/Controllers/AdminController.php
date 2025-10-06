@@ -8,13 +8,13 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
-    // form login
+    // Tampilkan form login
     public function showLoginForm()
     {
         return view('admin.login');
     }
 
-    // proses login
+    // Proses login
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -27,14 +27,14 @@ class AdminController extends Controller
 
             $role = Auth::user()->role;
 
-            // arahkan sesuai role
+            // Arahkan sesuai role
             if ($role === 'admin') {
-                return redirect()->intended('/administrator');
+                return redirect()->route('admin.dashboard');
             } elseif ($role === 'operator') {
-                return redirect()->intended('/operator  ');
+                return redirect()->route('operator.dashboard');
             } else {
                 Auth::logout();
-                return redirect()->route('admin.login')
+                return redirect()->route('login')
                     ->withErrors(['username' => 'Anda tidak memiliki akses ke sistem ini.']);
             }
         }
@@ -44,17 +44,17 @@ class AdminController extends Controller
         ])->onlyInput('username');
     }
 
-    // logout
+    // Logout
     public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('success', 'Anda berhasil logout.');
+        return redirect('/login')->with('success', 'Anda berhasil logout.');
     }
 
-    // dashboard admin
+    // Dashboard admin
     public function dashboard()
     {
         $profile = SchoolProfile::first();

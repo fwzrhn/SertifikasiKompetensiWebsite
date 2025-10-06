@@ -1,4 +1,4 @@
-@extends('admin.template')
+@extends('operator.template')
 
 @section('title', 'Data Galeri')
 

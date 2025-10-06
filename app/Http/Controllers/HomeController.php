@@ -2,20 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\News;
-use App\Models\Student;
 use App\Models\Teacher;
+use App\Models\Student;
+use App\Models\Extracurricular;
+use App\Models\News;
 
 class HomeController extends Controller
 {
     public function home()
     {
-        $students = Student::orderBy('created_at', 'desc')->get();
-        $teachers = Teacher::orderBy('created_at', 'desc')->get();
-        // ambil semua berita (atau batasi mis. take(6) kalau mau)
-        $news = News::orderBy('tanggal', 'desc')->take(3);
+        // Ambil data dari database
+        $jumlahSiswa = Student::count();
+        $jumlahGuru = Teacher::count();
+        $jumlahEkskul = Extracurricular::count();
 
-        // kirim $news juga ke view
-        return view('home', compact('students', 'teachers', 'news'));
+        // Ambil 3 berita terbaru
+        $berita = News::orderBy('tanggal', 'desc')->take(3)->get();
+
+        // Ambil 3 ekskul unggulan (misal yang terbaru)
+        $ekskul = Extracurricular::orderBy('id_ekskul', 'desc')->take(3)->get();
+
+        return view('home', compact(
+            'jumlahSiswa',
+            'jumlahGuru',
+            'jumlahEkskul',
+            'berita',
+            'ekskul'
+        ));
     }
 }

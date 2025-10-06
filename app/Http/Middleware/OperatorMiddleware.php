@@ -14,12 +14,18 @@ class OperatorMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Pastikan user login dan role-nya operator
-        if (Auth::check() && Auth::user()->role === 'operator') {
-            return $next($request);
+        // Jika belum login → arahkan ke login
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
         }
 
-        // Kalau bukan operator, tolak akses
-        return redirect('/')->with('error', 'Akses dibatasi untuk operator.');
+        // Jika sudah login tapi bukan operator
+        if (Auth::user()->role !== 'operator') {
+            Auth::logout();
+            return redirect()->route('login')->with('error', 'Akses hanya untuk operator.');
+        }
+
+        // Jika role sesuai → lanjut
+        return $next($request);
     }
 }

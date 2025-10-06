@@ -3,18 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Models\News;
+use App\Models\SchoolProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
 {
+    /**
+     * Halaman daftar berita untuk admin/operator
+     */
     public function index()
     {
         $news = News::with('user')->latest()->get();
-        return view('admin.news.index', compact('news'));
+        $schoolProfile = SchoolProfile::first();
+
+        if (Auth::user()->role === 'operator') {
+            return view('operator.news.index', compact('news', 'schoolProfile'));
+        }
+
+        return view('admin.news.index', compact('news', 'schoolProfile'));
     }
 
+    /**
+     * Simpan berita baru
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -37,9 +50,13 @@ class NewsController extends Controller
             'id_user' => Auth::id(),
         ]);
 
-        return redirect()->route('news.index')->with('success', 'Berita berhasil ditambahkan!');
+        $route = Auth::user()->role === 'operator' ? 'operator.news.index' : 'news.index';
+        return redirect()->route($route)->with('success', 'Berita berhasil ditambahkan!');
     }
 
+    /**
+     * Update berita
+     */
     public function update(Request $request, $id)
     {
         $news = News::findOrFail($id);
@@ -66,9 +83,13 @@ class NewsController extends Controller
             'gambar' => $path,
         ]);
 
-        return redirect()->route('news.index')->with('success', 'Berita berhasil diperbarui!');
+        $route = Auth::user()->role === 'operator' ? 'operator.news.index' : 'news.index';
+        return redirect()->route($route)->with('success', 'Berita berhasil diperbarui!');
     }
 
+    /**
+     * Hapus berita
+     */
     public function destroy($id)
     {
         $news = News::findOrFail($id);
@@ -79,22 +100,29 @@ class NewsController extends Controller
 
         $news->delete();
 
-        return redirect()->route('news.index')->with('success', 'Berita berhasil dihapus!');
+        $route = Auth::user()->role === 'operator' ? 'operator.news.index' : 'news.index';
+        return redirect()->route($route)->with('success', 'Berita berhasil dihapus!');
     }
+
+    /**
+     * Halaman publik: daftar berita
+     */
     public function publicIndex()
     {
-        $news = News::latest('tanggal')->paginate(6); // paginate biar rapi
-        $schoolProfile = \App\Models\SchoolProfile::first();
+        $news = News::latest('tanggal')->paginate(6);
+        $schoolProfile = SchoolProfile::first();
 
         return view('news.index', compact('news', 'schoolProfile'));
     }
 
+    /**
+     * Halaman publik: detail berita
+     */
     public function show($id)
     {
         $article = News::findOrFail($id);
-        $schoolProfile = \App\Models\SchoolProfile::first();
+        $schoolProfile = SchoolProfile::first();
 
         return view('news.show', compact('article', 'schoolProfile'));
     }
-
 }

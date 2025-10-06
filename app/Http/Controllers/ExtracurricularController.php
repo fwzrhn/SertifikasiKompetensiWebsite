@@ -3,17 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Models\Extracurricular;
+use App\Models\SchoolProfile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ExtracurricularController extends Controller
 {
+    /**
+     * Menampilkan daftar ekskul (untuk admin & operator)
+     */
     public function index()
     {
         $extracurriculars = Extracurricular::latest()->get();
-        return view('admin.extracurricular.index', compact('extracurriculars'));
+        $schoolProfile = SchoolProfile::first();
+
+        // Jika login sebagai operator → tampilkan layout operator
+        if (Auth::user()->role === 'operator') {
+            return view('operator.extracurricular.index', compact('extracurriculars', 'schoolProfile'));
+        }
+
+        // Jika login sebagai admin → tampilkan layout admin
+        return view('admin.extracurricular.index', compact('extracurriculars', 'schoolProfile'));
     }
 
+    /**
+     * Simpan data ekskul baru
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -39,9 +55,14 @@ class ExtracurricularController extends Controller
             'gambar' => $path,
         ]);
 
-        return redirect()->route('extracurricular.index')->with('success', 'Ekskul berhasil ditambahkan!');
+        // Arahkan sesuai role yang login
+        $route = Auth::user()->role === 'operator' ? 'operator.extracurricular.index' : 'extracurricular.index';
+        return redirect()->route($route)->with('success', 'Ekskul berhasil ditambahkan!');
     }
 
+    /**
+     * Update ekskul
+     */
     public function update(Request $request, $id)
     {
         $ekskul = Extracurricular::findOrFail($id);
@@ -54,10 +75,13 @@ class ExtracurricularController extends Controller
             'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
+        $path = $ekskul->gambar;
+
         if ($request->hasFile('gambar')) {
             if ($ekskul->gambar) {
                 Storage::disk('public')->delete($ekskul->gambar);
             }
+
             $file = $request->file('gambar');
             $filename = time().'_'.uniqid().'.'.$file->getClientOriginalExtension();
             $path = $file->storeAs('extracurriculars', $filename, 'public');
@@ -71,9 +95,13 @@ class ExtracurricularController extends Controller
             'gambar' => $path,
         ]);
 
-        return redirect()->route('extracurricular.index')->with('success', 'Ekskul berhasil diperbarui!');
+        $route = Auth::user()->role === 'operator' ? 'operator.extracurricular.index' : 'extracurricular.index';
+        return redirect()->route($route)->with('success', 'Ekskul berhasil diperbarui!');
     }
 
+    /**
+     * Hapus ekskul
+     */
     public function destroy($id)
     {
         $ekskul = Extracurricular::findOrFail($id);
@@ -84,22 +112,29 @@ class ExtracurricularController extends Controller
 
         $ekskul->delete();
 
-        return redirect()->route('extracurricular.index')->with('success', 'Ekskul berhasil dihapus!');
+        $route = Auth::user()->role === 'operator' ? 'operator.extracurricular.index' : 'extracurricular.index';
+        return redirect()->route($route)->with('success', 'Ekskul berhasil dihapus!');
     }
+
+    /**
+     * Halaman publik daftar ekskul
+     */
     public function publicIndex()
     {
-        $extracurriculars = \App\Models\Extracurricular::latest()->get();
-        $schoolProfile = \App\Models\SchoolProfile::first();
+        $extracurriculars = Extracurricular::latest()->get();
+        $schoolProfile = SchoolProfile::first();
 
         return view('extracurricular.index', compact('extracurriculars', 'schoolProfile'));
     }
 
+    /**
+     * Detail ekskul (halaman publik)
+     */
     public function show($id)
     {
-        $extracurricular = \App\Models\Extracurricular::findOrFail($id);
-        $schoolProfile = \App\Models\SchoolProfile::first();
+        $extracurricular = Extracurricular::findOrFail($id);
+        $schoolProfile = SchoolProfile::first();
 
         return view('extracurricular.show', compact('extracurricular', 'schoolProfile'));
     }
-
 }

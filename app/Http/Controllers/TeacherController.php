@@ -3,23 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Models\Teacher;
+use App\Models\SchoolProfile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class TeacherController extends Controller
 {
+    /**
+     * Menampilkan daftar guru (admin & operator)
+     */
     public function index()
     {
-        $teachers = Teacher::all();
-        return view('admin.teacher.index', compact('teachers'));
+        $teachers = Teacher::orderBy('created_at', 'desc')->get();
+        $schoolProfile = SchoolProfile::first();
+
+        if (Auth::user()->role === 'operator') {
+            return view('operator.teacher.index', compact('teachers', 'schoolProfile'));
+        }
+
+        return view('admin.teacher.index', compact('teachers', 'schoolProfile'));
     }
 
+    /**
+     * Simpan guru baru (admin & operator)
+     */
     public function store(Request $request)
     {
         $request->validate([
-            'nama_guru' => 'required',
-            'nip' => 'required',
-            'mapel' => 'required',
+            'nama_guru' => 'required|string|max:100',
+            'nip' => 'required|string|max:30',
+            'mapel' => 'required|string|max:100',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
@@ -35,21 +49,24 @@ class TeacherController extends Controller
             'foto' => $fotoPath,
         ]);
 
-        return redirect()->route('teachers.index')->with('success', 'Guru berhasil ditambahkan.');
+        $route = Auth::user()->role === 'operator' ? 'operator.teachers.index' : 'teachers.index';
+        return redirect()->route($route)->with('success', 'Guru berhasil ditambahkan.');
     }
 
+    /**
+     * Update data guru (admin & operator)
+     */
     public function update(Request $request, $id)
     {
         $teacher = Teacher::findOrFail($id);
 
         $request->validate([
-            'nama_guru' => 'required',
-            'nip' => 'required',
-            'mapel' => 'required',
+            'nama_guru' => 'required|string|max:100',
+            'nip' => 'required|string|max:30',
+            'mapel' => 'required|string|max:100',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        // kalau ada foto baru, hapus lama
         if ($request->hasFile('foto')) {
             if ($teacher->foto && Storage::disk('public')->exists($teacher->foto)) {
                 Storage::disk('public')->delete($teacher->foto);
@@ -57,14 +74,20 @@ class TeacherController extends Controller
             $teacher->foto = $request->file('foto')->store('teachers', 'public');
         }
 
-        $teacher->nama_guru = $request->nama_guru;
-        $teacher->nip = $request->nip;
-        $teacher->mapel = $request->mapel;
-        $teacher->save();
+        $teacher->update([
+            'nama_guru' => $request->nama_guru,
+            'nip' => $request->nip,
+            'mapel' => $request->mapel,
+            'foto' => $teacher->foto,
+        ]);
 
-        return redirect()->route('teachers.index')->with('success', 'Data guru berhasil diperbarui.');
+        $route = Auth::user()->role === 'operator' ? 'operator.teachers.index' : 'teachers.index';
+        return redirect()->route($route)->with('success', 'Data guru berhasil diperbarui.');
     }
 
+    /**
+     * Hapus data guru (admin & operator)
+     */
     public function destroy($id)
     {
         $teacher = Teacher::findOrFail($id);
@@ -75,14 +98,18 @@ class TeacherController extends Controller
 
         $teacher->delete();
 
-        return redirect()->route('teachers.index')->with('success', 'Guru berhasil dihapus.');
+        $route = Auth::user()->role === 'operator' ? 'operator.teachers.index' : 'teachers.index';
+        return redirect()->route($route)->with('success', 'Guru berhasil dihapus.');
     }
+
+    /**
+     * Halaman publik daftar guru
+     */
     public function publicIndex()
     {
-        $teachers = \App\Models\Teacher::all();
-        $schoolProfile = \App\Models\SchoolProfile::first();
+        $teachers = Teacher::orderBy('nama_guru')->get();
+        $schoolProfile = SchoolProfile::first();
 
         return view('teachers.index', compact('teachers', 'schoolProfile'));
     }
-
 }
