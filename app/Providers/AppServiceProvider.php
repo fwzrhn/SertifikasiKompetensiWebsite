@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use App\Models\SchoolProfile;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,10 +22,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Ambil data School Profile pertama
-        $profile = SchoolProfile::first();
+        if (Schema::hasTable('schoolProfile'))
+        {
+            // Ambil data School Profile pertama
+            $profile = SchoolProfile::first();
 
-        // Share ke semua blade
-        View::share('schoolProfile', $profile);
+            // Share ke semua blade
+            View::share('schoolProfile', $profile);
+        }
     }
 }
