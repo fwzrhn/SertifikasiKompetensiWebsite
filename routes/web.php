@@ -81,7 +81,7 @@ Route::middleware(['auth.redirect', 'auth', 'admin'])->prefix('administrator')->
     Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
     // School Profile
-    Route::get('/school-profile', [SchoolProfileController::class, 'index'])->name('school-profile.index');
+    Route::get('/school-profile', [SchoolProfileController::class, 'index'])->name('profile.index');
     Route::put('/school-profile/{id}', [SchoolProfileController::class, 'update'])->name('school-profile.update');
 
     // Students

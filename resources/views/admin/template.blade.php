@@ -89,23 +89,24 @@
             {{ $schoolProfile?->nama_sekolah ?? 'Nama Sekolah' }}
         </a>
         <ul class="nav flex-column">
-            @if(Auth::user()->role === 'admin')
-                <li><a href="{{ route('profile.index') }}">🏫   Profil Sekolah</a></li>
-            @endif
             <li class="nav-item">
-                <a class="nav-link {{ request()->is('administrator/students*') ? 'active' : '' }}" href="{{ route('students.index') }}">👨‍🎓 Students</a>
+                <a class="nav-link {{ request()->is('administrator/school-profile*') ? 'active' : '' }}" href="{{ route('profile.index') }}">Profil Sekolah</a>
+            </li>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request()->is('administrator/teachers*') ? 'active' : '' }}" href="{{ route('teachers.index') }}">👨‍🏫 Teachers</a>
+                <a class="nav-link {{ request()->is('administrator/students*') ? 'active' : '' }}" href="{{ route('students.index') }}">Students</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request()->is('administrator/extracurriculars*') ? 'active' : '' }}" href="{{ route('extracurricular.index') }}">🎯 Extracurricular</a>
+                <a class="nav-link {{ request()->is('administrator/teachers*') ? 'active' : '' }}" href="{{ route('teachers.index') }}">Teachers</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request()->is('administrator/news*') ? 'active' : '' }}" href="{{ route('news.index') }}">📰 News</a>
+                <a class="nav-link {{ request()->is('administrator/extracurriculars*') ? 'active' : '' }}" href="{{ route('extracurricular.index') }}">Extracurricular</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request()->is('administrator/galleries*') ? 'active' : '' }}" href="{{ route('galleries.index') }}">🖼️ Gallery</a>
+                <a class="nav-link {{ request()->is('administrator/news*') ? 'active' : '' }}" href="{{ route('news.index') }}">News</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->is('administrator/galleries*') ? 'active' : '' }}" href="{{ route('galleries.index') }}">Gallery</a>
             </li>
         </ul>
         <div class="mt-auto p-3">

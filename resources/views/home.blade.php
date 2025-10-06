@@ -4,7 +4,7 @@
 
 @section('content')
 
-<!-- ====== Carousel ====== -->
+<!-- ====== Hero / Carousel ====== -->
 <div id="carousel" class="carousel slide position-relative" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active position-relative">
@@ -27,7 +27,7 @@
 </div>
 
 <!-- ====== Section Data Sekolah ====== -->
-<div class="container section-spacing">
+<section class="container section-spacing">
     <div class="card data-card">
         <div class="section-header mb-4 d-flex align-items-center">
             <img src="{{ asset('assets/icon/stats.png') }}" alt="icon" width="32" class="me-2">
@@ -36,19 +36,19 @@
         <hr class="divider mb-5">
 
         <div class="row text-center justify-content-center">
-            <div class="col-md-4 mb-3">
+            <div class="col-10 col-md-4 mb-3">
                 <div class="data-box">
                     <h4 class="fw-bold text-success mb-1">{{ $jumlahSiswa }}</h4>
                     <p class="text-muted mb-0">Siswa</p>
                 </div>
             </div>
-            <div class="col-md-4 mb-3">
+            <div class="col-10 col-md-4 mb-3">
                 <div class="data-box">
                     <h4 class="fw-bold text-success mb-1">{{ $jumlahGuru }}</h4>
                     <p class="text-muted mb-0">Guru</p>
                 </div>
             </div>
-            <div class="col-md-4 mb-3">
+            <div class="col-10 col-md-4 mb-3">
                 <div class="data-box">
                     <h4 class="fw-bold text-success mb-1">{{ $jumlahEkskul }}</h4>
                     <p class="text-muted mb-0">Ekstrakurikuler</p>
@@ -56,10 +56,10 @@
             </div>
         </div>
     </div>
-</div>
+</section>
 
 <!-- ====== Section Sambutan Kepala Sekolah ====== -->
-<div class="container section-spacing">
+<section class="container section-spacing">
     <div class="card section-card">
         <div class="row align-items-center">
             <div class="col-md-4 text-center mb-4 mb-md-0">
@@ -70,8 +70,10 @@
                 <p class="text-muted mb-0">Kepala MTsN 10 Tasikmalaya</p>
             </div>
             <div class="col-md-8">
-                <h3 class="section-heading text-center text-md-start mb-4">👨‍🏫 Sambutan Kepala Sekolah</h3>
-                <p class="text-secondary" style="line-height: 1.8; text-align: justify;">
+                <h3 class="section-heading text-center text-md-start mb-4">
+                    👨‍🏫 Sambutan Kepala Sekolah
+                </h3>
+                <p class="text-secondary" style="line-height: 1.9; text-align: justify;">
                     "Assalamu’alaikum warahmatullahi wabarakatuh.
                     Selamat datang di website resmi MTsN 10 Tasikmalaya.
                     Kami berkomitmen memberikan pendidikan berkualitas dengan nilai keislaman yang kuat,
@@ -80,10 +82,10 @@
             </div>
         </div>
     </div>
-</div>
+</section>
 
 <!-- ====== Section Berita ====== -->
-<div class="container section-spacing">
+<section class="container section-spacing">
     <div class="card section-card">
         <div class="text-center mb-5">
             <h2 class="section-heading">📰 Berita Terbaru</h2>
@@ -96,11 +98,13 @@
                     <div class="card news-card h-100">
                         <img src="{{ asset('storage/' . $item->gambar) }}" class="card-img-top" alt="{{ $item->judul }}">
                         <div class="card-body">
-                            <h5 class="card-title">{{ $item->judul }}</h5>
+                            <h5 class="card-title fw-semibold">{{ $item->judul }}</h5>
                             <p class="card-text text-muted">
                                 {{ Str::limit($item->isi, 100, '...') }}
                             </p>
-                            <a href="{{ route('public.news.show', $item->id_berita) }}" class="btn btn-outline-success btn-sm">Selengkapnya</a>
+                            <a href="{{ route('public.news.show', $item->id_berita) }}" class="btn btn-outline-success btn-sm">
+                                Selengkapnya
+                            </a>
                         </div>
                         <div class="card-footer text-muted small">
                             {{ \Carbon\Carbon::parse($item->tanggal)->translatedFormat('d F Y') }}
@@ -112,10 +116,10 @@
             @endforelse
         </div>
     </div>
-</div>
+</section>
 
 <!-- ====== Section Ekstrakurikuler ====== -->
-<div class="container section-spacing">
+<section class="container section-spacing">
     <div class="card section-card">
         <div class="text-center mb-5">
             <h2 class="section-heading">🏅 Ekstrakurikuler Unggulan</h2>
@@ -138,51 +142,57 @@
             @endforelse
         </div>
     </div>
-</div>
+</section>
 
 <!-- ====== CSS Styling ====== -->
 <style>
-    .section-spacing {
-        margin-top: 60px;
-        margin-bottom: 60px;
-        min-height: 50vh;
-    }
-    .section-card {
-        border: none;
-        border-radius: 16px;
-        padding: 40px 30px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    :root {
+        --green: #198754;
+        --green-light: #d6f5e1;
+        --shadow: rgba(0, 0, 0, 0.1);
+        --radius: 16px;
     }
 
-    /* Data Sekolah Style */
-    .data-card {
+    .section-spacing {
+        margin-top: 70px;
+        margin-bottom: 70px;
+    }
+
+    .section-card {
         border: none;
-        border-radius: 20px;
-        padding: 40px 30px;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+        border-radius: var(--radius);
+        padding: 50px 35px;
+        box-shadow: 0 8px 30px var(--shadow);
         background: #fff;
     }
+
+    /* Data Card */
+    .data-card {
+        border-radius: 20px;
+        background: linear-gradient(to bottom right, #ffffff, #f8fff9);
+        padding: 40px 30px;
+        box-shadow: 0 6px 18px var(--shadow);
+    }
+
     .divider {
         height: 2px;
-        background-color: #1e8449;
+        background-color: var(--green);
         border: none;
-        opacity: 1;
-        width: 100%;
-        margin: 8px 0 0;
+        width: 80px;
+        margin: 10px 0 30px;
     }
+
     .data-box {
         background: #fff;
-        border-radius: 16px;
+        border-radius: var(--radius);
         padding: 25px 15px;
-        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.06);
+        box-shadow: 0 3px 15px var(--shadow);
         transition: all 0.3s ease;
     }
     .data-box:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-    }
-    .data-box h4 {
-        font-size: 2rem;
+        transform: translateY(-6px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        background: var(--green-light);
     }
 
     /* Carousel */
@@ -192,20 +202,22 @@
     }
     .overlay {
         position: absolute;
-        top: 0; left: 0;
-        width: 100%; height: 100%;
+        inset: 0;
         background: rgba(0, 0, 0, 0.45);
     }
     .logo-carousel {
         max-height: 170px;
         animation: fadeInUp 1.2s ease;
+        filter: drop-shadow(0 3px 8px rgba(0,0,0,0.3));
     }
     .title-carousel {
-        color: #FFD700;
+        color: #ffe57f;
         animation: fadeInRight 1.4s ease;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.3);
     }
     .subtitle-carousel {
-        font-size: 1.25rem;
+        font-size: 1.2rem;
+        color: #e0e0e0;
         animation: fadeInLeft 1.6s ease;
     }
 
@@ -214,29 +226,29 @@
         width: 180px;
         height: 180px;
         object-fit: cover;
-        border: 5px solid #1e8449;
+        border: 5px solid var(--green);
         transition: transform 0.3s ease;
     }
     .headmaster-img:hover {
-        transform: scale(1.05);
+        transform: scale(1.06);
     }
 
     /* Card Reuse */
     .news-card, .ekskul-card {
         border: none;
-        border-radius: 12px;
-        box-shadow: 0 3px 14px rgba(0, 0, 0, 0.08);
+        border-radius: var(--radius);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
         transition: 0.3s ease;
     }
     .news-card:hover, .ekskul-card:hover {
         transform: translateY(-6px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 8px 26px rgba(0, 0, 0, 0.12);
     }
     .news-card img, .ekskul-card img {
-        height: 220px;
+        height: 230px;
         object-fit: cover;
-        border-top-left-radius: 12px;
-        border-top-right-radius: 12px;
+        border-top-left-radius: var(--radius);
+        border-top-right-radius: var(--radius);
     }
 
     @keyframes fadeInUp {

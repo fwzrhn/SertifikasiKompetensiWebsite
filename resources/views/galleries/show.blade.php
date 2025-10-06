@@ -3,60 +3,115 @@
 @section('title', $gallery->judul)
 
 @section('content')
-<div class="container" style="height: 20px"></div>
+<style>
+    .gallery-show {
+        margin-top: 40px;
+    }
 
-<div class="container my-5">
-    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
-        <div class="card-body p-4">
+    .gallery-card {
+        border: none;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        background: #ffffff;
+    }
 
+    .gallery-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.1);
+    }
+
+    .gallery-title {
+        color: #198754;
+        font-weight: 700;
+    }
+
+    .gallery-divider {
+        width: 60px;
+        height: 3px;
+        background-color: #198754;
+        opacity: 0.7;
+        margin: 0 auto 20px auto;
+        border-radius: 4px;
+    }
+
+    .gallery-media {
+        max-height: 500px;
+        border-radius: 15px;
+        object-fit: cover;
+        width: 100%;
+        transition: transform 0.3s ease;
+    }
+
+    .gallery-media:hover {
+        transform: scale(1.02);
+    }
+
+    .gallery-desc {
+        line-height: 1.8;
+        color: #555;
+        text-align: justify;
+        font-size: 0.96rem;
+    }
+
+    .back-btn {
+        border-radius: 30px;
+        padding: 10px 25px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .back-btn:hover {
+        background-color: #198754;
+        color: #fff !important;
+    }
+</style>
+
+<div class="container gallery-show">
+    <div class="card gallery-card mx-auto p-4">
+        <div class="text-center mb-4">
+            <h2 class="gallery-title">{{ $gallery->judul }}</h2>
+            <p class="text-muted small mb-2">
+                <i class="bi bi-calendar3"></i>
+                {{ \Carbon\Carbon::parse($gallery->tanggal)->format('d M Y') }}
+            </p>
+            <div class="gallery-divider"></div>
+        </div>
+
+        {{-- tampilkan file sesuai kategori --}}
+        @if($gallery->kategori === 'Video' && $gallery->file)
+            @php
+                $ext = pathinfo($gallery->file, PATHINFO_EXTENSION);
+            @endphp
             <div class="text-center mb-4">
-                <h2 class="fw-bold text-success mb-2">{{ $gallery->judul }}</h2>
-                <p class="text-muted small">
-                    <i class="bi bi-calendar3"></i>
-                    {{ \Carbon\Carbon::parse($gallery->tanggal)->format('d M Y') }}
-                </p>
-                <hr class="w-25 mx-auto border-success opacity-50">
+                <video controls class="gallery-media shadow-sm">
+                    <source src="{{ asset('storage/' . $gallery->file) }}" type="video/{{ strtolower($ext) }}">
+                    Browser kamu tidak mendukung pemutar video.
+                </video>
             </div>
-
-            {{-- tampilkan file sesuai kategori --}}
-            @if($gallery->kategori === 'Video' && $gallery->file)
-                @php
-                    $ext = pathinfo($gallery->file, PATHINFO_EXTENSION);
-                @endphp
-                <div class="text-center mb-4">
-                    <video controls class="rounded-4 shadow-sm" style="max-height: 480px; width:100%; object-fit:cover;">
-                        <source src="{{ asset('storage/' . $gallery->file) }}" type="video/{{ strtolower($ext) }}">
-                        Browser kamu tidak mendukung pemutar video.
-                    </video>
-                </div>
-            @elseif($gallery->file)
-                <div class="text-center mb-4">
-                    <img src="{{ asset('storage/' . $gallery->file) }}"
-                         class="img-fluid rounded-4 shadow-sm"
-                         alt="{{ $gallery->judul }}"
-                         style="max-height: 480px; object-fit: cover;">
-                </div>
-            @else
-                <div class="text-center mb-4">
-                    <img src="{{ asset('assets/image/default-gallery.png') }}"
-                         class="img-fluid rounded-4 shadow-sm"
-                         alt="Default Gallery"
-                         style="max-height: 480px; object-fit: cover;">
-                </div>
-            @endif
-
-            <div class="px-md-3">
-                <p class="text-secondary fs-6" style="line-height: 1.8;">
-                    {{ $gallery->keterangan }}
-                </p>
+        @elseif($gallery->file)
+            <div class="text-center mb-4">
+                <img src="{{ asset('storage/' . $gallery->file) }}"
+                     alt="{{ $gallery->judul }}"
+                     class="gallery-media shadow-sm">
             </div>
-
-            <div class="text-center mt-5">
-                <a href="{{ route('public.galleries.index') }}"
-                   class="btn btn-outline-success rounded-pill px-4 py-2">
-                    ← Kembali ke Galeri
-                </a>
+        @else
+            <div class="text-center mb-4">
+                <img src="{{ asset('assets/image/default-gallery.png') }}"
+                     alt="Default Gallery"
+                     class="gallery-media shadow-sm">
             </div>
+        @endif
+
+        <div class="px-md-3">
+            <p class="gallery-desc">{{ $gallery->keterangan }}</p>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{{ route('public.galleries.index') }}" class="btn btn-outline-success back-btn">
+                ← Kembali ke Galeri
+            </a>
         </div>
     </div>
 </div>

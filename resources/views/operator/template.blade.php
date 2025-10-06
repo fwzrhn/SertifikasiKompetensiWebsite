@@ -12,7 +12,12 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 
     <style>
-        body { background-color: #f4f6f9; margin: 0; padding: 0; }
+        body {
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", sans-serif;
+        }
 
         /* Sidebar */
         .sidebar {
@@ -29,9 +34,11 @@
         }
         .sidebar .nav-link {
             color: #ddd;
-            padding: 10px 20px;
+            padding: 12px 20px;
             display: block;
-            transition: 0.2s;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            margin: 2px 10px;
         }
         .sidebar .nav-link.active {
             background-color: #1a5e3d;
@@ -49,6 +56,7 @@
             margin-bottom: 20px;
             display: flex;
             align-items: center;
+            font-size: 1.1rem;
         }
         .sidebar .navbar-brand img {
             height: 36px;
@@ -59,8 +67,9 @@
         /* Content */
         .content {
             margin-left: 240px;
-            padding: 20px;
+            padding: 25px;
             min-height: calc(100vh - 50px);
+            transition: all 0.3s;
         }
 
         /* Footer */
@@ -73,6 +82,26 @@
             position: fixed;
             bottom: 0;
             width: calc(100% - 240px);
+            font-size: 0.85rem;
+        }
+
+        /* Logout button */
+        .sidebar form button {
+            transition: all 0.3s;
+        }
+        .sidebar form button:hover {
+            background-color: #198754;
+            color: #fff;
+            border-color: #198754;
+        }
+
+        /* Badge user */
+        .sidebar .user-badge {
+            font-size: 0.9rem;
+            background-color: #198754;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 6px;
         }
     </style>
 </head>

@@ -3,36 +3,109 @@
 @section('title', 'News')
 
 @section('content')
-<div class="container" style="height: 20px"></div>
-<div class="container mt-4">
-    <h2 class="mb-4 text-success">📰 Latest News</h2>
+<style>
+    .news-section {
+        background: linear-gradient(180deg, #f9fdf9 0%, #f2fff5 100%);
+        padding: 60px 0;
+    }
 
-    <div class="row">
-        @foreach($news as $item)
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm">
-                    @if($item->gambar)
-                        <img src="{{ asset($item->gambar) }}" class="card-img-top" alt="{{ $item->judul }}" style="height:200px; object-fit:cover;">
-                    @else
-                        <img src="{{ asset('assets/image/default-news.png') }}" class="card-img-top" alt="Default News" style="height:200px; object-fit:cover;">
-                    @endif
+    .news-title {
+        color: #145a32;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 40px;
+        position: relative;
+    }
 
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $item->judul }}</h5>
-                        <p class="card-text text-muted">{{ \Illuminate\Support\Str::limit(strip_tags($item->isi), 100) }}</p>
-                        <a href="{{ route('public.news.show', $item->id_berita) }}" class="btn btn-sm btn-success">Read More</a>
-                    </div>
+    .news-title::after {
+        content: "";
+        display: block;
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, #145a32, #1e8449);
+        margin: 12px auto 0;
+        border-radius: 6px;
+    }
 
-                    <div class="card-footer text-muted">
-                        {{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}
-                    </div>
+    .news-card {
+        border: none;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+    }
+
+    .news-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+    }
+
+    .news-card img {
+        height: 220px;
+        object-fit: cover;
+    }
+
+    .news-carousel .carousel-item {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        background-color: #1e8449;
+        border-radius: 50%;
+        padding: 15px;
+    }
+</style>
+
+<div class="news-section">
+    <div class="container">
+        <h2 class="news-title">📰 Latest News</h2>
+
+        @if($news->count() > 0)
+            @php
+                $chunks = $news->chunk(3); // bagi per 3 item per slide
+            @endphp
+
+            <div id="newsCarousel" class="carousel slide news-carousel" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @foreach($chunks as $key => $chunk)
+                        <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
+                            @foreach($chunk as $item)
+                                <div class="card news-card" style="width: 22rem;">
+                                    @if($item->gambar)
+                                        <img src="{{ asset($item->gambar) }}" class="card-img-top" alt="{{ $item->judul }}">
+                                    @else
+                                        <img src="{{ asset('assets/image/default-news.png') }}" class="card-img-top" alt="Default News">
+                                    @endif
+                                    <div class="card-body">
+                                        <h5 class="card-title text-success">{{ $item->judul }}</h5>
+                                        <p class="card-text text-muted">
+                                            {{ Str::limit(strip_tags($item->isi), 100) }}
+                                        </p>
+                                        <a href="{{ route('public.news.show', $item->id_berita) }}" class="btn btn-sm btn-outline-success">Read More</a>
+                                    </div>
+                                    <div class="card-footer text-muted small">
+                                        {{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endforeach
                 </div>
-            </div>
-        @endforeach
-    </div>
 
-    <div class="d-flex justify-content-center">
-        {{ $news->links() }}
+                <!-- Tombol navigasi -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#newsCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#newsCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </button>
+            </div>
+        @else
+            <div class="alert alert-info text-center">Belum ada berita.</div>
+        @endif
     </div>
 </div>
 @endsection

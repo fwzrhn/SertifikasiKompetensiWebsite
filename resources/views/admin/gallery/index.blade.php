@@ -3,9 +3,50 @@
 @section('title', 'Data Galeri')
 
 @section('content')
+<style>
+    /* 🔹 Efek hover pada card */
+    .card {
+        transition: all 0.25s ease;
+        border-radius: 10px;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 🔹 Label kategori di pojok atas */
+    .badge-category {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 10;
+        font-size: 0.85rem;
+        padding: 6px 10px;
+        border-radius: 6px;
+    }
+
+    /* 🔹 Style tombol hover */
+    .btn-outline-success:hover {
+        background-color: #198754;
+        color: #fff;
+    }
+
+    .btn-outline-danger:hover {
+        background-color: #dc3545;
+        color: #fff;
+    }
+
+    /* 🔹 Modal tampil lebih lembut */
+    .modal-content {
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+</style>
+
 <div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>Data Galeri</h2>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-success">📸 Data Galeri</h2>
         <button class="btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#createModal">
             ➕ Tambah Galeri
         </button>
@@ -15,18 +56,23 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    {{-- Grid Card --}}
+    {{-- 🔹 Grid Galeri --}}
     <div class="row">
         @forelse($galleries as $gallery)
             <div class="col-md-4 col-sm-6 mb-4">
-                <div class="card shadow-sm h-100 border-0">
+                <div class="card shadow-sm h-100 border-0 position-relative">
 
-                    {{-- 🔹 Preview Foto atau Video --}}
+                    {{-- 🔹 Label kategori --}}
+                    @if($gallery->kategori === 'Video')
+                        <span class="badge bg-danger badge-category">🎥 Video</span>
+                    @else
+                        <span class="badge bg-primary badge-category">🖼 Foto</span>
+                    @endif
+
+                    {{-- 🔹 Preview Foto / Video --}}
                     @if($gallery->kategori === 'Video' && $gallery->file)
-                        @php
-                            $ext = pathinfo($gallery->file, PATHINFO_EXTENSION);
-                        @endphp
-                        <video controls class="card-img-top rounded-top" style="height:160px; object-fit:cover;">
+                        @php $ext = pathinfo($gallery->file, PATHINFO_EXTENSION); @endphp
+                        <video controls class="card-img-top rounded-top" style="height:200px; object-fit:cover;">
                             <source src="{{ asset('storage/' . $gallery->file) }}" type="video/{{ strtolower($ext) }}">
                             Browser kamu tidak mendukung pemutar video.
                         </video>
@@ -34,16 +80,16 @@
                         <img src="{{ asset('storage/' . $gallery->file) }}"
                              class="card-img-top rounded-top"
                              alt="{{ $gallery->judul }}"
-                             style="height:160px; object-fit:cover;">
+                             style="height:200px; object-fit:cover;">
                     @else
-                        <div class="d-flex justify-content-center align-items-center bg-light rounded-top" style="height:160px;">
+                        <div class="d-flex justify-content-center align-items-center bg-light rounded-top" style="height:200px;">
                             <span class="text-muted">Tidak ada file</span>
                         </div>
                     @endif
 
                     {{-- 🔹 Isi Card --}}
                     <div class="card-body p-3">
-                        <h5 class="card-title fw-bold">{{ $gallery->judul }}</h5>
+                        <h5 class="card-title fw-bold text-dark">{{ $gallery->judul }}</h5>
                         <p class="mb-1"><strong>Keterangan:</strong> {{ $gallery->keterangan }}</p>
                         <p class="mb-1"><strong>Kategori:</strong> {{ $gallery->kategori }}</p>
                         <p class="mb-0 text-muted"><small>Tanggal: {{ $gallery->tanggal }}</small></p>
@@ -125,7 +171,7 @@
             </div>
         @empty
             <div class="col-12">
-                <div class="alert alert-warning">Belum ada data galeri.</div>
+                <div class="alert alert-warning text-center fw-bold">⚠️ Belum ada data galeri.</div>
             </div>
         @endforelse
     </div>
