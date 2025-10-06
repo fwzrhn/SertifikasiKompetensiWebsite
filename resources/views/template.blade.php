@@ -61,11 +61,14 @@
             margin-top: 40px;
             text-align: center;
         }
+        .content{
+            margin-top: 110px
+        }
     </style>
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg mb-0">
+    <nav class="navbar navbar-expand-lg mb-0 fixed-top">
         <div class="container container-gap">
             <a class="navbar-brand" href="{{ url('/') }}">
                 @if($schoolProfile?->logo)
