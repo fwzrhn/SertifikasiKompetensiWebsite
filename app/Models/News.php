@@ -10,9 +10,9 @@ class News extends Model
     use HasFactory;
 
     protected $table = 'news';
-    protected $primaryKey = 'id_berita';  // primary key custom
-    public $incrementing = true;          // auto increment
-    protected $keyType = 'int';           // tipe data integer
+    protected $primaryKey = 'id_berita';  
+    public $incrementing = true;
+    protected $keyType = 'int';
 
     protected $fillable = [
         'judul',

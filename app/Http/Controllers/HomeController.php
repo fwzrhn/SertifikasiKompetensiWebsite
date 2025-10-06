@@ -11,15 +11,15 @@ class HomeController extends Controller
 {
     public function home()
     {
-        // Ambil data dari database
+        // Ambil data
         $jumlahSiswa = Student::count();
         $jumlahGuru = Teacher::count();
         $jumlahEkskul = Extracurricular::count();
 
-        // Ambil 3 berita terbaru
+        // Ambil 3 berita 
         $berita = News::orderBy('tanggal', 'desc')->take(3)->get();
 
-        // Ambil 3 ekskul unggulan (misal yang terbaru)
+        // Ambil 3 ekskul
         $ekskul = Extracurricular::orderBy('id_ekskul', 'desc')->take(3)->get();
 
         return view('home', compact(

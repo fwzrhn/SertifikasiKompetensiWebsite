@@ -4,7 +4,7 @@
 
 @section('content')
 <style>
-    /* 🔹 Efek hover pada card */
+
     .card {
         transition: all 0.25s ease;
         border-radius: 10px;
@@ -15,7 +15,7 @@
         box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
     }
 
-    /* 🔹 Label kategori di pojok atas */
+
     .badge-category {
         position: absolute;
         top: 10px;
@@ -26,7 +26,6 @@
         border-radius: 6px;
     }
 
-    /* 🔹 Style tombol hover */
     .btn-outline-success:hover {
         background-color: #198754;
         color: #fff;
@@ -37,7 +36,6 @@
         color: #fff;
     }
 
-    /* 🔹 Modal tampil lebih lembut */
     .modal-content {
         border-radius: 12px;
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);

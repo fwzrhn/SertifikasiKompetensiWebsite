@@ -4,7 +4,6 @@
 
 @section('content')
 
-<!-- ====== Hero / Carousel ====== -->
 <div id="carousel" class="carousel slide position-relative" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active position-relative">
@@ -26,7 +25,7 @@
     </div>
 </div>
 
-<!-- ====== Section Data Sekolah ====== -->
+
 <section class="container section-spacing">
     <div class="card data-card">
         <div class="section-header mb-4 d-flex align-items-center">
@@ -58,7 +57,7 @@
     </div>
 </section>
 
-<!-- ====== Section Sambutan Kepala Sekolah ====== -->
+
 <section class="container section-spacing">
     <div class="card section-card">
         <div class="row align-items-center">
@@ -84,7 +83,7 @@
     </div>
 </section>
 
-<!-- ====== Section Berita ====== -->
+
 <section class="container section-spacing">
     <div class="card section-card">
         <div class="text-center mb-5">
@@ -118,7 +117,7 @@
     </div>
 </section>
 
-<!-- ====== Section Ekstrakurikuler ====== -->
+
 <section class="container section-spacing">
     <div class="card section-card">
         <div class="text-center mb-5">
@@ -144,7 +143,7 @@
     </div>
 </section>
 
-<!-- ====== CSS Styling ====== -->
+
 <style>
     :root {
         --green: #198754;
@@ -166,7 +165,6 @@
         background: #fff;
     }
 
-    /* Data Card */
     .data-card {
         border-radius: 20px;
         background: linear-gradient(to bottom right, #ffffff, #f8fff9);
@@ -195,7 +193,6 @@
         background: var(--green-light);
     }
 
-    /* Carousel */
     .carousel-item img {
         height: 100vh;
         object-fit: cover;
@@ -221,7 +218,6 @@
         animation: fadeInLeft 1.6s ease;
     }
 
-    /* Headmaster Section */
     .headmaster-img {
         width: 180px;
         height: 180px;
@@ -233,7 +229,6 @@
         transform: scale(1.06);
     }
 
-    /* Card Reuse */
     .news-card, .ekskul-card {
         border: none;
         border-radius: var(--radius);

@@ -13,13 +13,13 @@ use Illuminate\Support\Facades\Auth;
 
 class OperatorController extends Controller
 {
-    // Form login (pakai view yang sama kayak admin)
+
     public function showLoginForm()
     {
-        return view('admin.login'); // bisa diganti 'operator.login' kalau mau beda
+        return view('admin.login');
     }
 
-    // Proses login untuk operator
+
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -44,7 +44,7 @@ class OperatorController extends Controller
         ])->onlyInput('username');
     }
 
-    // Dashboard operator
+
     public function dashboard()
     {
         $profile = SchoolProfile::first();
@@ -68,7 +68,7 @@ class OperatorController extends Controller
         ));
     }
 
-    // Logout operator
+    
     public function logout(Request $request)
     {
         Auth::logout();

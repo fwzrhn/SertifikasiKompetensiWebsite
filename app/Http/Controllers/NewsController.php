@@ -10,9 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
 {
-    /**
-     * Halaman daftar berita untuk admin/operator
-     */
+
     public function index()
     {
         $news = News::with('user')->latest()->get();
@@ -25,9 +23,7 @@ class NewsController extends Controller
         return view('admin.news.index', compact('news', 'schoolProfile'));
     }
 
-    /**
-     * Simpan berita baru
-     */
+
     public function store(Request $request)
     {
         $request->validate([
@@ -54,9 +50,7 @@ class NewsController extends Controller
         return redirect()->route($route)->with('success', 'Berita berhasil ditambahkan!');
     }
 
-    /**
-     * Update berita
-     */
+
     public function update(Request $request, $id)
     {
         $news = News::findOrFail($id);
@@ -87,9 +81,7 @@ class NewsController extends Controller
         return redirect()->route($route)->with('success', 'Berita berhasil diperbarui!');
     }
 
-    /**
-     * Hapus berita
-     */
+
     public function destroy($id)
     {
         $news = News::findOrFail($id);
@@ -104,9 +96,7 @@ class NewsController extends Controller
         return redirect()->route($route)->with('success', 'Berita berhasil dihapus!');
     }
 
-    /**
-     * Halaman publik: daftar berita
-     */
+
     public function publicIndex()
     {
         $news = News::latest('tanggal')->paginate(6);
@@ -115,9 +105,7 @@ class NewsController extends Controller
         return view('news.index', compact('news', 'schoolProfile'));
     }
 
-    /**
-     * Halaman publik: detail berita
-     */
+   
     public function show($id)
     {
         $article = News::findOrFail($id);

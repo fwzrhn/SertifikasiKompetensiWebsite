@@ -10,26 +10,22 @@ use Illuminate\Support\Facades\Storage;
 
 class ExtracurricularController extends Controller
 {
-    /**
-     * Menampilkan daftar ekskul (untuk admin & operator)
-     */
+
     public function index()
     {
         $extracurriculars = Extracurricular::latest()->get();
         $schoolProfile = SchoolProfile::first();
 
-        // Jika login sebagai operator → tampilkan layout operator
+
         if (Auth::user()->role === 'operator') {
             return view('operator.extracurricular.index', compact('extracurriculars', 'schoolProfile'));
         }
 
-        // Jika login sebagai admin → tampilkan layout admin
+
         return view('admin.extracurricular.index', compact('extracurriculars', 'schoolProfile'));
     }
 
-    /**
-     * Simpan data ekskul baru
-     */
+
     public function store(Request $request)
     {
         $request->validate([
@@ -60,9 +56,7 @@ class ExtracurricularController extends Controller
         return redirect()->route($route)->with('success', 'Ekskul berhasil ditambahkan!');
     }
 
-    /**
-     * Update ekskul
-     */
+
     public function update(Request $request, $id)
     {
         $ekskul = Extracurricular::findOrFail($id);
@@ -99,9 +93,7 @@ class ExtracurricularController extends Controller
         return redirect()->route($route)->with('success', 'Ekskul berhasil diperbarui!');
     }
 
-    /**
-     * Hapus ekskul
-     */
+
     public function destroy($id)
     {
         $ekskul = Extracurricular::findOrFail($id);
@@ -116,9 +108,7 @@ class ExtracurricularController extends Controller
         return redirect()->route($route)->with('success', 'Ekskul berhasil dihapus!');
     }
 
-    /**
-     * Halaman publik daftar ekskul
-     */
+
     public function publicIndex()
     {
         $extracurriculars = Extracurricular::latest()->get();
@@ -127,9 +117,7 @@ class ExtracurricularController extends Controller
         return view('extracurricular.index', compact('extracurriculars', 'schoolProfile'));
     }
 
-    /**
-     * Detail ekskul (halaman publik)
-     */
+    
     public function show($id)
     {
         $extracurricular = Extracurricular::findOrFail($id);

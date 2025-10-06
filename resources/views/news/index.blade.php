@@ -65,7 +65,7 @@
 
         @if($news->count() > 0)
             @php
-                $chunks = $news->chunk(3); // bagi per 3 item per slide
+                $chunks = $news->chunk(3); 
             @endphp
 
             <div id="newsCarousel" class="carousel slide news-carousel" data-bs-ride="carousel">

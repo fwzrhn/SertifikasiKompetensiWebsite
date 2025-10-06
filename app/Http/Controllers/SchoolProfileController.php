@@ -7,18 +7,13 @@ use Illuminate\Http\Request;
 
 class SchoolProfileController extends Controller
 {
-    /**
-     * ADMIN: Tampilkan halaman edit profil sekolah
-     */
+
     public function index()
     {
         $profile = SchoolProfile::first();
         return view('admin.school_profile.index', compact('profile'));
     }
 
-    /**
-     * ADMIN: Update profil sekolah
-     */
     public function update(Request $request, $id)
     {
         $profile = SchoolProfile::findOrFail($id);

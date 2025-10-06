@@ -13,7 +13,7 @@
     }
 
     table th {
-        background: #198754 !important; /* Bootstrap success color */
+        background: #198754 !important; 
         color: #fff !important;
         text-align: center;
         vertical-align: middle;

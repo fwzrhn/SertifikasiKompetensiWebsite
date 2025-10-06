@@ -163,7 +163,7 @@
 <script>
     function scrollCarousel(direction) {
         const carousel = document.getElementById('teacherCarousel');
-        const scrollAmount = carousel.offsetWidth * 0.9; // geser sekitar 90% lebar container
+        const scrollAmount = carousel.offsetWidth * 0.9; 
         carousel.scrollBy({
             left: direction * scrollAmount,
             behavior: 'smooth'

@@ -20,7 +20,6 @@
         font-weight: 700;
     }
 
-    /* Scroll horizontal */
     .extracurricular-scroll {
         display: flex;
         gap: 20px;
@@ -95,7 +94,7 @@
 
 <div class="container extracurricular-section">
     <div class="extracurricular-header">
-        <h2>🏀 Extracurricular Activities</h2>
+        <h2>Extracurricular Activities</h2>
     </div>
 
     @if($extracurriculars->count() > 0)

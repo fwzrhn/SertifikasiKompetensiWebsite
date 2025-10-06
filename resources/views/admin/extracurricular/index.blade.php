@@ -39,7 +39,7 @@
 
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold text-success mb-0">🏀 Data Ekstrakurikuler</h2>
+        <h2 class="fw-bold text-success mb-0">Data Ekstrakurikuler</h2>
         <button class="btn btn-success fw-bold shadow-sm px-3" data-bs-toggle="modal" data-bs-target="#addModal">
             <i class="bi bi-plus-lg"></i> Tambah Ekskul
         </button>

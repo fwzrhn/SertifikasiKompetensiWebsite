@@ -10,9 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class GalleryController extends Controller
 {
-    /**
-     * Menampilkan daftar galeri (admin & operator)
-     */
+
     public function index()
     {
         $galleries = Gallery::latest()->get();
@@ -25,9 +23,7 @@ class GalleryController extends Controller
         return view('admin.gallery.index', compact('galleries', 'schoolProfile'));
     }
 
-    /**
-     * Simpan galeri baru
-     */
+
     public function store(Request $request)
     {
         $request->validate([
@@ -56,9 +52,6 @@ class GalleryController extends Controller
         return redirect()->route($route)->with('success', 'Galeri berhasil ditambahkan!');
     }
 
-    /**
-     * Update galeri
-     */
     public function update(Request $request, $id)
     {
         $gallery = Gallery::findOrFail($id);
@@ -93,9 +86,7 @@ class GalleryController extends Controller
         return redirect()->route($route)->with('success', 'Galeri berhasil diperbarui!');
     }
 
-    /**
-     * Hapus galeri
-     */
+
     public function destroy($id)
     {
         $gallery = Gallery::findOrFail($id);
@@ -110,9 +101,7 @@ class GalleryController extends Controller
         return redirect()->route($route)->with('success', 'Galeri berhasil dihapus!');
     }
 
-    /**
-     * Halaman publik: daftar galeri
-     */
+
     public function publicIndex()
     {
         $galleries = Gallery::latest('tanggal')->paginate(9);
@@ -121,9 +110,7 @@ class GalleryController extends Controller
         return view('galleries.index', compact('galleries', 'schoolProfile'));
     }
 
-    /**
-     * Halaman publik: detail galeri
-     */
+    
     public function show($id)
     {
         $gallery = Gallery::findOrFail($id);

@@ -26,7 +26,7 @@
             font-family: "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", sans-serif;
         }
 
-        /* ===== Navbar ===== */
+        // Navbar Style
         nav.navbar {
             background: linear-gradient(90deg, var(--green-dark), var(--green));
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
@@ -68,7 +68,6 @@
             color: var(--text-light) !important;
         }
 
-        /* Underline effect for active link */
         .navbar-nav .nav-link.active::after {
             content: "";
             position: absolute;
@@ -80,7 +79,7 @@
             border-radius: 1px;
         }
 
-        /* Navbar toggle button (burger) */
+        // Navbar Toggle
         .navbar-toggler {
             border: none;
             filter: invert(100%);
@@ -97,13 +96,13 @@
             width: 100%;
         }
 
-        /* ===== Content ===== */
+        // Content Area
         .content {
             margin-top: 75px;
             min-height: calc(100vh - 160px);
         }
 
-        /* ===== Footer ===== */
+        // Footer Style
         footer {
             background: linear-gradient(90deg, var(--green-dark), var(--green));
             color: #fff;
@@ -123,7 +122,7 @@
             font-weight: 600;
         }
 
-        /* ===== Responsive ===== */
+        // Responsive Styles
         @media (max-width: 992px) {
             .navbar-nav .nav-link {
                 text-align: center;
@@ -139,7 +138,7 @@
 </head>
 
 <body>
-    <!-- ===== Navbar ===== -->
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container container-gap">
             <a class="navbar-brand" href="{{ url('/') }}">
@@ -169,12 +168,12 @@
         </div>
     </nav>
 
-    <!-- ===== Content ===== -->
+    <!-- Content Area -->
     <div class="content">
         @yield('content')
     </div>
 
-    <!-- ===== Footer ===== -->
+    <!-- Footer -->
     <footer>
         <small>
             © {{ date('Y') }}

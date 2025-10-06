@@ -11,11 +11,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Public Routes (User Facing)
-|--------------------------------------------------------------------------
-*/
+
 
 // Home
 Route::get('/', [HomeController::class, 'home'])->name('home');
@@ -42,11 +38,7 @@ Route::get('/extracurriculars/{id}', [ExtracurricularController::class, 'show'])
 Route::get('/school-profile', [SchoolProfileController::class, 'show'])->name('school-profile.show');
 
 
-/*
-|--------------------------------------------------------------------------
-| Default login redirect (fix: Route [login] not defined)
-|--------------------------------------------------------------------------
-*/
+
 
 Route::get('/login', function () {
     // default redirect ke admin login
@@ -54,11 +46,6 @@ Route::get('/login', function () {
 })->name('login');
 
 
-/*
-|--------------------------------------------------------------------------
-| Authentication Routes (Admin & Operator)
-|--------------------------------------------------------------------------
-*/
 
 // Admin login
 Route::get('/admin/login', [AdminController::class, 'showLoginForm'])->name('admin.login');
@@ -71,11 +58,7 @@ Route::post('/operator/login', [OperatorController::class, 'login'])->name('oper
 Route::post('/operator/logout', [OperatorController::class, 'logout'])->name('operator.logout');
 
 
-/*
-|--------------------------------------------------------------------------
-| Admin Routes (Protected by auth & admin middleware)
-|--------------------------------------------------------------------------
-*/
+
 
 Route::middleware(['auth.redirect', 'auth', 'admin'])->prefix('administrator')->group(function () {
     Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
@@ -116,11 +99,7 @@ Route::middleware(['auth.redirect', 'auth', 'admin'])->prefix('administrator')->
 });
 
 
-/*
-|--------------------------------------------------------------------------
-| Operator Routes (Protected by auth & operator middleware)
-|--------------------------------------------------------------------------
-*/
+
 
 Route::middleware(['auth.redirect', 'auth', 'operator'])->prefix('operator')->group(function () {
     Route::get('/', [OperatorController::class, 'dashboard'])->name('operator.dashboard');

@@ -20,7 +20,6 @@
         font-weight: 700;
     }
 
-    /* Scrollable row */
     .gallery-scroll {
         display: flex;
         gap: 20px;

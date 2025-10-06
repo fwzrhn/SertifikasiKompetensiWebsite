@@ -10,9 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class TeacherController extends Controller
 {
-    /**
-     * Menampilkan daftar guru (admin & operator)
-     */
+
     public function index()
     {
         $teachers = Teacher::orderBy('created_at', 'desc')->get();
@@ -25,9 +23,7 @@ class TeacherController extends Controller
         return view('admin.teacher.index', compact('teachers', 'schoolProfile'));
     }
 
-    /**
-     * Simpan guru baru (admin & operator)
-     */
+
     public function store(Request $request)
     {
         $request->validate([
@@ -53,9 +49,7 @@ class TeacherController extends Controller
         return redirect()->route($route)->with('success', 'Guru berhasil ditambahkan.');
     }
 
-    /**
-     * Update data guru (admin & operator)
-     */
+
     public function update(Request $request, $id)
     {
         $teacher = Teacher::findOrFail($id);
@@ -85,9 +79,7 @@ class TeacherController extends Controller
         return redirect()->route($route)->with('success', 'Data guru berhasil diperbarui.');
     }
 
-    /**
-     * Hapus data guru (admin & operator)
-     */
+
     public function destroy($id)
     {
         $teacher = Teacher::findOrFail($id);
@@ -102,9 +94,7 @@ class TeacherController extends Controller
         return redirect()->route($route)->with('success', 'Guru berhasil dihapus.');
     }
 
-    /**
-     * Halaman publik daftar guru
-     */
+    
     public function publicIndex()
     {
         $teachers = Teacher::orderBy('nama_guru')->get();

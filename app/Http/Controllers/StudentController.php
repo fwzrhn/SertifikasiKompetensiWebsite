@@ -9,9 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
 {
-    /**
-     * Menampilkan daftar siswa (admin & operator)
-     */
+
     public function index()
     {
         $students = Student::orderBy('created_at', 'desc')->get();
@@ -24,9 +22,7 @@ class StudentController extends Controller
         return view('admin.student.index', compact('students', 'schoolProfile'));
     }
 
-    /**
-     * Menyimpan siswa baru (admin & operator)
-     */
+
     public function store(Request $request)
     {
         $request->validate([
@@ -42,9 +38,7 @@ class StudentController extends Controller
         return redirect()->route($route)->with('success', 'Data siswa berhasil ditambahkan!');
     }
 
-    /**
-     * Update data siswa (admin & operator)
-     */
+
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -61,9 +55,7 @@ class StudentController extends Controller
         return redirect()->route($route)->with('success', 'Data siswa berhasil diperbarui!');
     }
 
-    /**
-     * Hapus data siswa (admin & operator)
-     */
+
     public function destroy($id)
     {
         $student = Student::findOrFail($id);
@@ -73,9 +65,7 @@ class StudentController extends Controller
         return redirect()->route($route)->with('success', 'Data siswa berhasil dihapus!');
     }
 
-    /**
-     * Halaman publik daftar siswa
-     */
+    
     public function publicIndex()
     {
         $students = Student::orderBy('nama_siswa')->get();

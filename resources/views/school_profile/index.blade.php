@@ -4,7 +4,6 @@
 
 @section('content')
 <style>
-    /* === Header tanpa background abu === */
     .profile-header {
         background: none;
         padding: 40px 20px 10px;
@@ -26,8 +25,6 @@
     .profile-header p {
         color: #555;
     }
-
-    /* === Card dan bagian bawah tetap seperti sebelumnya === */
     .card {
         border: 1px solid #e5e5e5;
         border-radius: 12px;
