@@ -3,18 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Models\SchoolProfile;
+use App\Models\Student;
+use App\Models\Teacher;
+use App\Models\News;
+use App\Models\Extracurricular;
+use App\Models\Gallery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
-    
     public function showLoginForm()
     {
         return view('admin.login');
     }
 
-    // Proses login
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -27,7 +30,6 @@ class AdminController extends Controller
 
             $role = Auth::user()->role;
 
-            // Arahkan sesuai role
             if ($role === 'admin') {
                 return redirect()->route('admin.dashboard');
             } elseif ($role === 'operator') {
@@ -44,7 +46,6 @@ class AdminController extends Controller
         ])->onlyInput('username');
     }
 
-    // Logout
     public function logout(Request $request)
     {
         Auth::logout();
@@ -54,27 +55,30 @@ class AdminController extends Controller
         return redirect('/login')->with('success', 'Anda berhasil logout.');
     }
 
-    // Dashboard admin
     public function dashboard()
     {
-        $profile = SchoolProfile::first();
 
-        $studentCount = \App\Models\Student::count();
-        $teacherCount = \App\Models\Teacher::count();
-        $newsCount = \App\Models\News::count();
-        $extracurricularCount = \App\Models\Extracurricular::count();
-        $galleryCount = \App\Models\Gallery::count();
+        $schoolProfile = SchoolProfile::first();
 
-        $latestStudents = \App\Models\Student::latest()->take(5)->get();
-        $latestTeachers = \App\Models\Teacher::latest()->take(5)->get();
-        $latestNews = \App\Models\News::latest()->take(5)->get();
-        $latestExtracurricular = \App\Models\Extracurricular::latest()->take(5)->get();
-        $latestGallery = \App\Models\Gallery::latest()->take(5)->get();
+        
+        $studentCount = Student::count();
+        $teacherCount = Teacher::count();
+        $newsCount = News::count();
+        $extracurricularCount = Extracurricular::count();
+        $galleryCount = Gallery::count();
 
+        // Ambil data terbaru
+        $latestStudents = Student::latest()->take(5)->get();
+        $latestTeachers = Teacher::latest()->take(5)->get();
+        $latestNews = News::latest()->take(5)->get();
+        $latestExtracurricular = Extracurricular::latest()->take(5)->get();
+        $latestGallery = Gallery::latest()->take(5)->get();
+
+        // ✅ Kirim semua data ke view pakai compact
         return view('admin.dashboard', compact(
+            'schoolProfile',
             'studentCount', 'teacherCount', 'newsCount', 'extracurricularCount', 'galleryCount',
-            'latestStudents', 'latestTeachers', 'latestNews', 'latestExtracurricular', 'latestGallery',
-            'profile'
+            'latestStudents', 'latestTeachers', 'latestNews', 'latestExtracurricular', 'latestGallery'
         ));
     }
 }

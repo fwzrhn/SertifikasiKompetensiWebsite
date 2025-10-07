@@ -26,7 +26,7 @@
             font-family: "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", sans-serif;
         }
 
-        // Navbar Style
+        /* ===== Navbar ===== */
         nav.navbar {
             background: linear-gradient(90deg, var(--green-dark), var(--green));
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
@@ -68,6 +68,7 @@
             color: var(--text-light) !important;
         }
 
+        /* Underline effect for active link */
         .navbar-nav .nav-link.active::after {
             content: "";
             position: absolute;
@@ -79,7 +80,7 @@
             border-radius: 1px;
         }
 
-        // Navbar Toggle
+        /* Navbar toggle button (burger) */
         .navbar-toggler {
             border: none;
             filter: invert(100%);
@@ -96,13 +97,13 @@
             width: 100%;
         }
 
-        // Content Area
+        /* ===== Content ===== */
         .content {
             margin-top: 75px;
             min-height: calc(100vh - 160px);
         }
 
-        // Footer Style
+        /* ===== Footer ===== */
         footer {
             background: linear-gradient(90deg, var(--green-dark), var(--green));
             color: #fff;
@@ -122,7 +123,7 @@
             font-weight: 600;
         }
 
-        // Responsive Styles
+        /* ===== Responsive ===== */
         @media (max-width: 992px) {
             .navbar-nav .nav-link {
                 text-align: center;
@@ -138,7 +139,7 @@
 </head>
 
 <body>
-    <!-- Navbar -->
+    <!-- ===== Navbar ===== -->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container container-gap">
             <a class="navbar-brand" href="{{ url('/') }}">
@@ -157,23 +158,23 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link {{ request()->is('students*') ? 'active' : '' }}" href="{{ route('public.students.index') }}">Students</a></li>
-                    <li class="nav-item"><a class="nav-link {{ request()->is('teachers*') ? 'active' : '' }}" href="{{ route('public.teachers.index') }}">Teachers</a></li>
-                    <li class="nav-item"><a class="nav-link {{ request()->is('news*') ? 'active' : '' }}" href="{{ route('public.news.index') }}">News</a></li>
-                    <li class="nav-item"><a class="nav-link {{ request()->is('galleries*') ? 'active' : '' }}" href="{{ route('public.galleries.index') }}">Gallery</a></li>
-                    <li class="nav-item"><a class="nav-link {{ request()->is('extracurriculars*') ? 'active' : '' }}" href="{{ route('public.extracurricular.index') }}">Extracurriculars</a></li>
-                    <li class="nav-item"><a class="nav-link {{ request()->is('school-profile*') ? 'active' : '' }}" href="{{ route('school-profile.show') }}">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('students*') ? 'active' : '' }}" href="{{ route('public.students.index') }}">Siswa</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('teachers*') ? 'active' : '' }}" href="{{ route('public.teachers.index') }}">Guru</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('news*') ? 'active' : '' }}" href="{{ route('public.news.index') }}">Berita</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('galleries*') ? 'active' : '' }}" href="{{ route('public.galleries.index') }}">Galeri</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('extracurriculars*') ? 'active' : '' }}" href="{{ route('public.extracurricular.index') }}">Ekstrakurikuler</a></li>
+                    <li class="nav-item"><a class="nav-link {{ request()->is('school-profile*') ? 'active' : '' }}" href="{{ route('school-profile.show') }}">Profil Sekolah</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Content Area -->
+    <!-- ===== Content ===== -->
     <div class="content">
         @yield('content')
     </div>
 
-    <!-- Footer -->
+    <!-- ===== Footer ===== -->
     <footer>
         <small>
             © {{ date('Y') }}

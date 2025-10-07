@@ -90,6 +90,12 @@
         </a>
         <ul class="nav flex-column">
             <li class="nav-item">
+                <a class="nav-link {{ request()->is('administrator/users*') ? 'active' : '' }}"
+                href="{{ route('users.index') }}">
+                Users
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link {{ request()->is('administrator/school-profile*') ? 'active' : '' }}" href="{{ route('profile.index') }}">Profil Sekolah</a>
             </li>
             </li>

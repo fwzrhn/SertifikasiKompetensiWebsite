@@ -80,7 +80,7 @@
 
 <div class="student-section">
     <div class="container">
-        <h2 class="student-title">👨‍🎓 Our Students</h2>
+        <h2 class="student-title">Siswa {{$schoolProfile->nama_sekolah}}</h2>
 
         @if($students->count() > 0)
             <div class="table-container">

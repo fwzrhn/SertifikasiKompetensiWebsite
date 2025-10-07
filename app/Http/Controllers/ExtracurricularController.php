@@ -51,7 +51,6 @@ class ExtracurricularController extends Controller
             'gambar' => $path,
         ]);
 
-        // Arahkan sesuai role yang login
         $route = Auth::user()->role === 'operator' ? 'operator.extracurricular.index' : 'extracurricular.index';
         return redirect()->route($route)->with('success', 'Ekskul berhasil ditambahkan!');
     }
@@ -117,7 +116,7 @@ class ExtracurricularController extends Controller
         return view('extracurricular.index', compact('extracurriculars', 'schoolProfile'));
     }
 
-    
+
     public function show($id)
     {
         $extracurricular = Extracurricular::findOrFail($id);

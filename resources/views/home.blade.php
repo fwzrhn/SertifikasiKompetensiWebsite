@@ -29,7 +29,6 @@
 <section class="container section-spacing">
     <div class="card data-card">
         <div class="section-header mb-4 d-flex align-items-center">
-            <img src="{{ asset('assets/icon/stats.png') }}" alt="icon" width="32" class="me-2">
             <h3 class="fw-bold text-success mb-0">Data Sekolah</h3>
         </div>
         <hr class="divider mb-5">
@@ -62,15 +61,15 @@
     <div class="card section-card">
         <div class="row align-items-center">
             <div class="col-md-4 text-center mb-4 mb-md-0">
-                <img src="{{ asset('assets/image/kepala-sekolah.jpg') }}"
+                <img src="{{ asset($schoolProfile->foto) }}"
                      alt="Kepala Sekolah"
                      class="rounded-circle shadow headmaster-img">
-                <h5 class="fw-bold mt-3 mb-1">H. Ahmad Fauzi, M.Pd</h5>
-                <p class="text-muted mb-0">Kepala MTsN 10 Tasikmalaya</p>
+                <h5 class="fw-bold mt-3 mb-1">{{$schoolProfile->kepala_sekolah}}</h5>
+                <p class="text-muted mb-0">Kepala {{$schoolProfile->nama_sekolah}}</p>
             </div>
             <div class="col-md-8">
                 <h3 class="section-heading text-center text-md-start mb-4">
-                    👨‍🏫 Sambutan Kepala Sekolah
+                     Sambutan Kepala Sekolah
                 </h3>
                 <p class="text-secondary" style="line-height: 1.9; text-align: justify;">
                     "Assalamu’alaikum warahmatullahi wabarakatuh.
@@ -87,8 +86,8 @@
 <section class="container section-spacing">
     <div class="card section-card">
         <div class="text-center mb-5">
-            <h2 class="section-heading">📰 Berita Terbaru</h2>
-            <p class="text-muted">Informasi terkini seputar MTsN 10 Tasikmalaya</p>
+            <h2 class="section-heading">Berita Terbaru</h2>
+            <p class="text-muted">Informasi terkini seputar {{$schoolProfile->nama_sekolah}}</p>
         </div>
 
         <div class="row g-4">
@@ -121,8 +120,8 @@
 <section class="container section-spacing">
     <div class="card section-card">
         <div class="text-center mb-5">
-            <h2 class="section-heading">🏅 Ekstrakurikuler Unggulan</h2>
-            <p class="text-muted">Kegiatan penunjang prestasi siswa MTsN 10 Tasikmalaya</p>
+            <h2 class="section-heading">Ekstrakurikuler Unggulan</h2>
+            <p class="text-muted">Kegiatan penunjang prestasi siswa {{$schoolProfile->nama_sekolah}}</p>
         </div>
 
         <div class="row g-4">

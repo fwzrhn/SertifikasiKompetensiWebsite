@@ -30,7 +30,7 @@ class TeacherController extends Controller
             'nama_guru' => 'required|string|max:100',
             'nip' => 'required|string|max:30',
             'mapel' => 'required|string|max:100',
-            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
         $fotoPath = null;
@@ -94,7 +94,7 @@ class TeacherController extends Controller
         return redirect()->route($route)->with('success', 'Guru berhasil dihapus.');
     }
 
-    
+
     public function publicIndex()
     {
         $teachers = Teacher::orderBy('nama_guru')->get();

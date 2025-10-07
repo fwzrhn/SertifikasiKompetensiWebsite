@@ -54,7 +54,7 @@
                                     data-bs-toggle="modal" data-bs-target="#editModal{{ $teacher->id_guru }}">
                                 <i class="bi bi-pencil-square"></i>
                             </button>
-                            <form action="{{ route('teachers.destroy', $teacher->id_guru) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin hapus guru ini?')">
+                            <form action="{{ route('operator.teachers.destroy', $teacher->id_guru) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin hapus guru ini?')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill">
@@ -68,7 +68,7 @@
                     <div class="modal fade" id="editModal{{ $teacher->id_guru }}" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content rounded-4 border-0 shadow">
-                                <form action="{{ route('teachers.update', $teacher->id_guru) }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('operator.teachers.update', $teacher->id_guru) }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
                                     <div class="modal-header bg-success text-white">
@@ -115,7 +115,7 @@
 <div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content rounded-4 border-0 shadow">
-            <form action="{{ route('teachers.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('operator.teachers.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-header bg-success text-white">
                     <h5 class="modal-title">Tambah Guru</h5>

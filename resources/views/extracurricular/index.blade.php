@@ -94,7 +94,7 @@
 
 <div class="container extracurricular-section">
     <div class="extracurricular-header">
-        <h2>Extracurricular Activities</h2>
+        <h2>Ekstrakurikuler</h2>
     </div>
 
     @if($extracurriculars->count() > 0)
@@ -102,9 +102,9 @@
             @foreach($extracurriculars as $item)
                 <div class="extracard">
                     @if($item->gambar)
-                        <img src="{{ asset($item->gambar) }}" alt="{{ $item->nama_ekskul }}">
+                        <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->nama_ekskul }}">
                     @else
-                        <img src="{{ asset('assets/image/default-extracurricular.png') }}" alt="Extracurricular">
+                        <img src="{{ asset('storage/' . $item->gambar) }}" alt="Extracurricular">
                     @endif
 
                     <div class="card-body">

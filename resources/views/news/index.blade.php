@@ -61,11 +61,11 @@
 
 <div class="news-section">
     <div class="container">
-        <h2 class="news-title">📰 Latest News</h2>
+        <h2 class="news-title">Berita Terbaru</h2>
 
         @if($news->count() > 0)
             @php
-                $chunks = $news->chunk(3); 
+                $chunks = $news->chunk(3);
             @endphp
 
             <div id="newsCarousel" class="carousel slide news-carousel" data-bs-ride="carousel">
@@ -75,9 +75,9 @@
                             @foreach($chunk as $item)
                                 <div class="card news-card" style="width: 22rem;">
                                     @if($item->gambar)
-                                        <img src="{{ asset($item->gambar) }}" class="card-img-top" alt="{{ $item->judul }}">
+                                        <img src="{{ asset('storage/' . $item->gambar) }}" class="card-img-top" alt="{{ $item->judul }}">
                                     @else
-                                        <img src="{{ asset('assets/image/default-news.png') }}" class="card-img-top" alt="Default News">
+                                        <img src="{{ asset('storage/' . $item->gambar) }}" class="card-img-top" alt="Default News">
                                     @endif
                                     <div class="card-body">
                                         <h5 class="card-title text-success">{{ $item->judul }}</h5>

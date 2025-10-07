@@ -95,7 +95,7 @@
 
 <div class="container gallery-section">
     <div class="gallery-header">
-        <h2>📸 School Gallery</h2>
+        <h2>Galeri Sekolah</h2>
     </div>
 
     @if($galleries->count() > 0)

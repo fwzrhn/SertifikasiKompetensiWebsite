@@ -123,15 +123,6 @@
             <li class="nav-item">
                 <a class="nav-link {{ request()->is('operator/teachers*') ? 'active' : '' }}" href="{{ route('operator.teachers.index') }}">👨‍🏫 Teachers</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link {{ request()->is('operator/extracurricular*') ? 'active' : '' }}" href="{{ route('operator.extracurricular.index') }}">🎯 Extracurricular</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ request()->is('operator/news*') ? 'active' : '' }}" href="{{ route('operator.news.index') }}">📰 News</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ request()->is('operator/galleries*') ? 'active' : '' }}" href="{{ route('operator.galleries.index') }}">🖼️ Gallery</a>
-            </li>
         </ul>
 
         <div class="mt-auto p-3">

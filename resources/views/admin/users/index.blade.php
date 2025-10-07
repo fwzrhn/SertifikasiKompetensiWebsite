@@ -1,6 +1,6 @@
-@extends('operator.template')
+@extends('admin.template')
 
-@section('title', 'Data Siswa')
+@section('title', 'Data User')
 
 @section('content')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
@@ -47,9 +47,9 @@
 
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold text-success mb-0">📋 Data Siswa</h2>
+        <h2 class="fw-bold text-success mb-0">👥 Data User</h2>
         <button class="btn btn-success shadow-sm" data-bs-toggle="modal" data-bs-target="#createModal">
-            <i class="bi bi-plus-circle me-1"></i> Tambah Siswa
+            <i class="bi bi-plus-circle me-1"></i> Tambah User
         </button>
     </div>
 
@@ -59,28 +59,32 @@
 
     <div class="card">
         <div class="card-body">
-            <table id="studentTable" class="table table-hover align-middle mb-0">
+            <table id="userTable" class="table table-hover align-middle mb-0">
                 <thead>
                     <tr>
-                        <th>NISN</th>
-                        <th>Nama Siswa</th>
-                        <th>Jenis Kelamin</th>
-                        <th>Tahun Masuk</th>
+                        <th>#</th>
+                        <th>Nama</th>
+                        <th>Username</th>
+                        <th>Role</th>
                         <th style="width: 120px;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($students as $student)
+                    @foreach($users as $user)
                         <tr>
-                            <td>{{ $student->nisn }}</td>
-                            <td>{{ $student->nama_siswa }}</td>
-                            <td>{{ $student->jenis_kelamin }}</td>
-                            <td>{{ $student->tahun_masuk }}</td>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->username }}</td>
+                            <td>
+                                <span class="badge bg-{{ $user->role === 'admin' ? 'danger' : ($user->role === 'operator' ? 'warning' : 'secondary') }}">
+                                    {{ ucfirst($user->role) }}
+                                </span>
+                            </td>
                             <td class="text-center">
-                                <button class="btn btn-outline-success btn-icon me-1" data-bs-toggle="modal" data-bs-target="#editModal{{ $student->id_siswa }}">
+                                <button class="btn btn-outline-success btn-icon me-1" data-bs-toggle="modal" data-bs-target="#editModal{{ $user->id }}">
                                     <i class="bi bi-pencil"></i>
                                 </button>
-                                <form action="{{ route('operator.students.destroy', $student->id_siswa) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin hapus siswa ini?')">
+                                <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin hapus user ini?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-outline-danger btn-icon">
@@ -91,35 +95,36 @@
                         </tr>
 
                         <!-- Modal Edit -->
-                        <div class="modal fade" id="editModal{{ $student->id_siswa }}" tabindex="-1" aria-hidden="true">
+                        <div class="modal fade" id="editModal{{ $user->id }}" tabindex="-1" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content border-0 shadow">
-                                    <form action="{{ route('operator.students.update', $student->id_siswa) }}" method="POST">
+                                    <form action="{{ route('users.update', $user->id) }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                         <div class="modal-header bg-success text-white">
-                                            <h5 class="modal-title">Edit Data Siswa</h5>
+                                            <h5 class="modal-title">Edit User</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                         </div>
                                         <div class="modal-body">
                                             <div class="mb-3">
-                                                <label class="form-label fw-semibold">NISN</label>
-                                                <input type="text" name="nisn" class="form-control" value="{{ $student->nisn }}" required>
+                                                <label class="form-label fw-semibold">Nama</label>
+                                                <input type="text" name="name" class="form-control" value="{{ $user->name }}" required>
                                             </div>
                                             <div class="mb-3">
-                                                <label class="form-label fw-semibold">Nama Siswa</label>
-                                                <input type="text" name="nama_siswa" class="form-control" value="{{ $student->nama_siswa }}" required>
+                                                <label class="form-label fw-semibold">Username</label>
+                                                <input type="text" name="username" class="form-control" value="{{ $user->username }}" required>
                                             </div>
                                             <div class="mb-3">
-                                                <label class="form-label fw-semibold">Jenis Kelamin</label>
-                                                <select name="jenis_kelamin" class="form-select" required>
-                                                    <option value="Laki-laki" {{ $student->jenis_kelamin == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
-                                                    <option value="Perempuan" {{ $student->jenis_kelamin == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                                                <label class="form-label fw-semibold">Password (opsional)</label>
+                                                <input type="password" name="password" class="form-control" placeholder="Kosongkan jika tidak ingin mengubah">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label fw-semibold">Role</label>
+                                                <select name="role" class="form-select" required>
+                                                    <option value="user" {{ $user->role == 'user' ? 'selected' : '' }}>User</option>
+                                                    <option value="operator" {{ $user->role == 'operator' ? 'selected' : '' }}>Operator</option>
+                                                    <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
                                                 </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label fw-semibold">Tahun Masuk</label>
-                                                <input type="number" name="tahun_masuk" class="form-control" value="{{ $student->tahun_masuk }}" required>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -143,31 +148,32 @@
 <div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow">
-            <form action="{{ route('operator.students.store') }}" method="POST">
+            <form action="{{ route('users.store') }}" method="POST">
                 @csrf
                 <div class="modal-header bg-success text-white">
-                    <h5 class="modal-title">Tambah Siswa</h5>
+                    <h5 class="modal-title">Tambah User</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label fw-semibold">NISN</label>
-                        <input type="text" name="nisn" class="form-control" required>
+                        <label class="form-label fw-semibold">Nama</label>
+                        <input type="text" name="name" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label fw-semibold">Nama Siswa</label>
-                        <input type="text" name="nama_siswa" class="form-control" required>
+                        <label class="form-label fw-semibold">Username</label>
+                        <input type="text" name="username" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label fw-semibold">Jenis Kelamin</label>
-                        <select name="jenis_kelamin" class="form-select" required>
-                            <option value="Laki-laki">Laki-laki</option>
-                            <option value="Perempuan">Perempuan</option>
+                        <label class="form-label fw-semibold">Password</label>
+                        <input type="password" name="password" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Role</label>
+                        <select name="role" class="form-select" required>
+                            <option value="user">User</option>
+                            <option value="operator">Operator</option>
+                            <option value="admin">Admin</option>
                         </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Tahun Masuk</label>
-                        <input type="number" name="tahun_masuk" class="form-control" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -180,13 +186,12 @@
         </div>
     </div>
 </div>
-
 <div class="container" style="height: 50px"></div>
 
 @push('scripts')
 <script>
     $(document).ready(function() {
-        $('#studentTable').DataTable({
+        $('#userTable').DataTable({
             responsive: true,
             language: {
                 search: "Cari:",

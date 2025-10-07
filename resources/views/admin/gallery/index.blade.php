@@ -35,7 +35,7 @@
         color: #fff;
     }
 
-    
+
     .modal-content {
         border-radius: 12px;
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
@@ -44,9 +44,9 @@
 
 <div class="container mt-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold text-success">📸 Data Galeri</h2>
+        <h2 class="fw-bold text-success">Data Galeri</h2>
         <button class="btn btn-success fw-bold" data-bs-toggle="modal" data-bs-target="#createModal">
-            ➕ Tambah Galeri
+             Tambah Galeri
         </button>
     </div>
 
@@ -62,9 +62,9 @@
 
                     {{-- 🔹 Label kategori --}}
                     @if($gallery->kategori === 'Video')
-                        <span class="badge bg-danger badge-category">🎥 Video</span>
+                        <span class="badge bg-danger badge-category">Video</span>
                     @else
-                        <span class="badge bg-primary badge-category">🖼 Foto</span>
+                        <span class="badge bg-primary badge-category">Foto</span>
                     @endif
 
                     {{-- 🔹 Preview Foto / Video --}}
@@ -98,14 +98,14 @@
                         <button class="btn btn-outline-success btn-sm fw-bold"
                                 data-bs-toggle="modal"
                                 data-bs-target="#editModal{{ $gallery->id_galeri }}">
-                            ✎ Edit
+                             Edit
                         </button>
 
                         <form action="{{ route('galleries.destroy', $gallery->id_galeri) }}" method="POST" style="display:inline-block" onsubmit="return confirm('Yakin hapus galeri ini?')">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-outline-danger btn-sm fw-bold">
-                                🗑 Hapus
+                                 Hapus
                             </button>
                         </form>
                     </div>
@@ -161,15 +161,15 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-success fw-bold">💾 Simpan</button>
-                            <button type="button" class="btn btn-outline-secondary fw-bold" data-bs-dismiss="modal">✖ Batal</button>
+                            <button type="submit" class="btn btn-success fw-bold">Simpan</button>
+                            <button type="button" class="btn btn-outline-secondary fw-bold" data-bs-dismiss="modal"> Batal</button>
                         </div>
                     </form>
                 </div>
             </div>
         @empty
             <div class="col-12">
-                <div class="alert alert-warning text-center fw-bold">⚠️ Belum ada data galeri.</div>
+                <div class="alert alert-warning text-center fw-bold">Belum ada data galeri.</div>
             </div>
         @endforelse
     </div>
@@ -210,8 +210,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-success fw-bold">💾 Simpan</button>
-                <button type="button" class="btn btn-outline-secondary fw-bold" data-bs-dismiss="modal">✖ Batal</button>
+                <button type="submit" class="btn btn-success fw-bold"> Simpan</button>
+                <button type="button" class="btn btn-outline-secondary fw-bold" data-bs-dismiss="modal">Batal</button>
             </div>
         </form>
     </div>

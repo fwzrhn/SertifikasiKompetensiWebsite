@@ -37,7 +37,7 @@
     <div class="mb-4">
         <h2 class="fw-bold text-success mb-2">📊 Dashboard Admin</h2>
         <p class="text-muted mb-1">
-            Halo, <strong>{{ Auth::user()->name }}</strong> 👋  
+            Halo, <strong>{{ Auth::user()->name }}</strong> 👋
             <span class="badge bg-success">Administrator</span>
         </p>
         <hr class="border-success opacity-25">
@@ -76,6 +76,7 @@
 
     <!-- Data Terbaru -->
     <div class="row">
+        <!-- Siswa Terbaru -->
         <div class="col-md-6 mb-4">
             <div class="card shadow-sm border-0 rounded-4 h-100">
                 <div class="card-header bg-success text-white fw-semibold">
@@ -86,7 +87,7 @@
                         @forelse($latestStudents as $s)
                             <li class="list-group-item border-0 px-0 py-2">
                                 <i class="bi bi-person-circle text-success me-2"></i>
-                                {{ $s->nama }}
+                                {{ $s->nama_siswa }}
                             </li>
                         @empty
                             <li class="text-muted text-center py-2">Belum ada data siswa.</li>
@@ -96,6 +97,7 @@
             </div>
         </div>
 
+        <!-- Berita Terbaru -->
         <div class="col-md-6 mb-4">
             <div class="card shadow-sm border-0 rounded-4 h-100">
                 <div class="card-header bg-success text-white fw-semibold">

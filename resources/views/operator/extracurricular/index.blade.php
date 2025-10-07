@@ -76,7 +76,7 @@
                         <button class="btn btn-outline-success btn-sm fw-semibold" data-bs-toggle="modal" data-bs-target="#editModal{{ $item->id_ekskul }}">
                             <i class="bi bi-pencil-square"></i> Edit
                         </button>
-                        <form action="{{ route('extracurricular.destroy', $item->id_ekskul) }}" method="POST" onsubmit="return confirm('Yakin hapus ekskul ini?')">
+                        <form action="{{ route('operator.extracurricular.destroy', $item->id_ekskul) }}" method="POST" onsubmit="return confirm('Yakin hapus ekskul ini?')">
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-outline-danger btn-sm fw-semibold">
@@ -90,7 +90,7 @@
             {{-- Modal Edit --}}
             <div class="modal fade" id="editModal{{ $item->id_ekskul }}" tabindex="-1">
                 <div class="modal-dialog">
-                    <form action="{{ route('extracurricular.update', $item->id_ekskul) }}" method="POST" enctype="multipart/form-data" class="modal-content shadow">
+                    <form action="{{ route('operator.extracurricular.update', $item->id_ekskul) }}" method="POST" enctype="multipart/form-data" class="modal-content shadow">
                         @csrf
                         @method('PUT')
                         <div class="modal-header bg-success text-white">
@@ -144,7 +144,7 @@
 {{-- Modal Tambah --}}
 <div class="modal fade" id="addModal" tabindex="-1">
     <div class="modal-dialog">
-        <form action="{{ route('extracurricular.store') }}" method="POST" enctype="multipart/form-data" class="modal-content shadow">
+        <form action="{{ route('operator.extracurricular.store') }}" method="POST" enctype="multipart/form-data" class="modal-content shadow">
             @csrf
             <div class="modal-header bg-success text-white">
                 <h5 class="modal-title fw-semibold">Tambah Ekskul</h5>

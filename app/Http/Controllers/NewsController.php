@@ -10,92 +10,97 @@ use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
 {
-
     public function index()
     {
         $news = News::with('user')->latest()->get();
         $schoolProfile = SchoolProfile::first();
 
-        if (Auth::user()->role === 'operator') {
+        if (Auth::check() && Auth::user()->role === 'operator') {
             return view('operator.news.index', compact('news', 'schoolProfile'));
         }
 
         return view('admin.news.index', compact('news', 'schoolProfile'));
     }
 
-
     public function store(Request $request)
     {
         $request->validate([
-            'judul' => 'required|max:50',
+            'judul' => 'required|string|max:100',
             'isi' => 'required',
             'tanggal' => 'required|date',
-            'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
-        $path = null;
+        $gambarPath = null;
         if ($request->hasFile('gambar')) {
-            $path = $request->file('gambar')->store('news', 'public');
+            $gambarPath = $request->file('gambar')->store('news', 'public');
         }
 
         News::create([
             'judul' => $request->judul,
             'isi' => $request->isi,
             'tanggal' => $request->tanggal,
-            'gambar' => $path,
+            'gambar' => $gambarPath,
             'id_user' => Auth::id(),
         ]);
 
-        $route = Auth::user()->role === 'operator' ? 'operator.news.index' : 'news.index';
-        return redirect()->route($route)->with('success', 'Berita berhasil ditambahkan!');
-    }
+        $route = (Auth::user()->role === 'operator')
+            ? 'operator.news.index'
+            : 'news.index';
 
+        return redirect()->route($route)->with('success', 'Berita berhasil ditambahkan.');
+    }
 
     public function update(Request $request, $id)
     {
         $news = News::findOrFail($id);
 
         $request->validate([
-            'judul' => 'required|max:50',
+            'judul' => 'required|string|max:100',
             'isi' => 'required',
             'tanggal' => 'required|date',
-            'gambar' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+            'gambar' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
-        $path = $news->gambar;
+        $gambarPath = $news->gambar;
+
         if ($request->hasFile('gambar')) {
-            if ($path) {
-                Storage::disk('public')->delete($path);
+            if ($gambarPath && Storage::disk('public')->exists($gambarPath)) {
+                Storage::disk('public')->delete($gambarPath);
             }
-            $path = $request->file('gambar')->store('news', 'public');
+            $gambarPath = $request->file('gambar')->store('news', 'public');
         }
 
         $news->update([
             'judul' => $request->judul,
             'isi' => $request->isi,
             'tanggal' => $request->tanggal,
-            'gambar' => $path,
+            'gambar' => $gambarPath,
         ]);
 
-        $route = Auth::user()->role === 'operator' ? 'operator.news.index' : 'news.index';
-        return redirect()->route($route)->with('success', 'Berita berhasil diperbarui!');
-    }
+        $route = (Auth::user()->role === 'operator')
+            ? 'operator.news.index'
+            : 'news.index';
 
+        return redirect()->route($route)->with('success', 'Berita berhasil diperbarui.');
+    }
 
     public function destroy($id)
     {
         $news = News::findOrFail($id);
 
-        if ($news->gambar) {
+        if ($news->gambar && Storage::disk('public')->exists($news->gambar)) {
             Storage::disk('public')->delete($news->gambar);
         }
 
         $news->delete();
 
-        $route = Auth::user()->role === 'operator' ? 'operator.news.index' : 'news.index';
-        return redirect()->route($route)->with('success', 'Berita berhasil dihapus!');
-    }
+        $route = (Auth::user()->role === 'operator')
+            ? 'operator.news.index'
+            : 'news.index';
 
+        return redirect()->route($route)->with('success', 'Berita berhasil dihapus.');
+    }
 
     public function publicIndex()
     {
@@ -105,7 +110,6 @@ class NewsController extends Controller
         return view('news.index', compact('news', 'schoolProfile'));
     }
 
-   
     public function show($id)
     {
         $article = News::findOrFail($id);

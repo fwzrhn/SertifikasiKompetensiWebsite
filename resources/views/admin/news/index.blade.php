@@ -23,9 +23,9 @@
 
 <div class="container mt-4 mb-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold text-success mb-0">📰 Data Berita</h2>
+        <h2 class="fw-bold text-success mb-0">Data Berita</h2>
         <button class="btn btn-success fw-bold px-3 py-2 shadow-sm" data-bs-toggle="modal" data-bs-target="#addModal">
-            ➕ Tambah Berita
+             Tambah Berita
         </button>
     </div>
 
@@ -70,7 +70,7 @@
                     <div class="card-footer bg-white border-0 d-flex justify-content-between">
                         <button class="btn btn-outline-success btn-sm fw-bold" data-bs-toggle="modal"
                                 data-bs-target="#editModal{{ $item->id_berita }}">
-                            ✎ Edit
+                             Edit
                         </button>
 
                         <form action="{{ route('news.destroy', $item->id_berita) }}" method="POST"
@@ -78,7 +78,7 @@
                             @csrf
                             @method('DELETE')
                             <button class="btn btn-outline-danger btn-sm fw-bold">
-                                🗑 Hapus
+                                 Hapus
                             </button>
                         </form>
                     </div>
@@ -93,7 +93,7 @@
                         @csrf
                         @method('PUT')
                         <div class="modal-header bg-success text-white">
-                            <h5 class="modal-title fw-bold">✏️ Edit Berita</h5>
+                            <h5 class="modal-title fw-bold"> Edit Berita</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body">
@@ -118,7 +118,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-success fw-bold px-3">💾 Simpan</button>
+                            <button class="btn btn-success fw-bold px-3"> Simpan</button>
                             <button type="button" class="btn btn-outline-secondary fw-bold" data-bs-dismiss="modal">✖ Batal</button>
                         </div>
                     </form>
@@ -138,7 +138,7 @@
         <form action="{{ route('news.store') }}" method="POST" enctype="multipart/form-data" class="modal-content shadow">
             @csrf
             <div class="modal-header bg-success text-white">
-                <h5 class="modal-title fw-bold">🆕 Tambah Berita</h5>
+                <h5 class="modal-title fw-bold"> Tambah Berita</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
@@ -160,8 +160,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-success fw-bold px-3">💾 Simpan</button>
-                <button type="button" class="btn btn-outline-secondary fw-bold" data-bs-dismiss="modal">✖ Batal</button>
+                <button class="btn btn-success fw-bold px-3"> Simpan</button>
+                <button type="button" class="btn btn-outline-secondary fw-bold" data-bs-dismiss="modal"> Batal</button>
             </div>
         </form>
     </div>

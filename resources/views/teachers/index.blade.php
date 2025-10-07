@@ -46,7 +46,7 @@
     }
 
     .teacher-card img {
-        height: 250px;
+        height: 550px;
         object-fit: cover;
         width: 100%;
     }
@@ -125,7 +125,7 @@
 
 <div class="teacher-section">
     <div class="container">
-        <h2 class="teacher-title">👩‍🏫 Our Teachers</h2>
+        <h2 class="teacher-title">Guru {{$schoolProfile->nama_sekolah}}</h2>
 
         @if($teachers->count() > 0)
             <div class="carousel-wrapper">
@@ -137,9 +137,9 @@
                     @foreach($teachers as $teacher)
                         <div class="card teacher-card">
                             @if($teacher->foto)
-                                <img src="{{ asset($teacher->foto) }}" alt="{{ $teacher->nama_guru }}">
+                                <img src="{{ asset('storage/'.$teacher->foto) }}" alt="{{ $teacher->nama_guru }}">
                             @else
-                                <img src="{{ asset('assets/image/default-teacher.png') }}" alt="Default Foto">
+                                <img src="{{ asset('storage/'.$teacher->foto) }}" alt="Default Foto">
                             @endif
                             <div class="card-body">
                                 <h5 class="card-title">{{ $teacher->nama_guru }}</h5>
@@ -163,7 +163,7 @@
 <script>
     function scrollCarousel(direction) {
         const carousel = document.getElementById('teacherCarousel');
-        const scrollAmount = carousel.offsetWidth * 0.9; 
+        const scrollAmount = carousel.offsetWidth * 0.9;
         carousel.scrollBy({
             left: direction * scrollAmount,
             behavior: 'smooth'
