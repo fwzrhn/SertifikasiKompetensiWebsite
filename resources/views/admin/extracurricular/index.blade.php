@@ -123,7 +123,7 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button class="btn btn-success fw-bold">💾 Simpan</button>
+                            <button class="btn btn-success fw-bold">Simpan</button>
                             <button type="button" class="btn btn-outline-secondary fw-bold" data-bs-dismiss="modal">✖ Batal</button>
                         </div>
                     </form>
@@ -132,7 +132,7 @@
         @empty
             <div class="col-12">
                 <div class="alert alert-warning text-center border-0 rounded-3 shadow-sm">
-                    Belum ada data ekstrakurikuler 😕
+                    Belum ada data ekstrakurikuler
                 </div>
             </div>
         @endforelse

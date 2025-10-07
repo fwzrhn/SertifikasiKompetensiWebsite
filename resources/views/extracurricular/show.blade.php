@@ -22,7 +22,7 @@
             {{-- Gambar utama --}}
             @if($extracurricular->gambar)
                 <div class="text-center mb-4">
-                    <img src="{{ asset($extracurricular->gambar) }}"
+                    <img src="{{ asset('storage/' . $extracurricular->gambar) }}"
                          class="img-fluid rounded-4 shadow-sm"
                          alt="{{ $extracurricular->nama_ekskul }}"
                          style="max-height: 420px; object-fit: cover;">

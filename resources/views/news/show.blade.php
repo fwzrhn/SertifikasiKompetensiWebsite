@@ -66,7 +66,7 @@
         </p>
 
         @if($article->gambar)
-            <img src="{{ asset($article->gambar) }}" alt="{{ $article->judul }}">
+            <img src="{{ asset('storage/' . $article->gambar) }}" alt="{{ $article->judul }}">
         @endif
 
         <div class="content">

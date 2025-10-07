@@ -20,8 +20,9 @@ Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/news', [NewsController::class, 'publicIndex'])->name('public.news.index');
 Route::get('/news/{id}', [NewsController::class, 'show'])->name('public.news.show');
 
+
 Route::get('/students', [StudentController::class, 'publicIndex'])->name('public.students.index');
-Route::get('/teachers', [TeacherController::class, 'publicIndex'])->name('public.teachers.index');
+Route::get('/teacher', [TeacherController::class, 'publicIndex'])->name('public.teachers.index');
 Route::get('/galleries', [GalleryController::class, 'publicIndex'])->name('public.galleries.index');
 Route::get('/galleries/{id}', [GalleryController::class, 'show'])->name('public.galleries.show');
 Route::get('/extracurriculars', [ExtracurricularController::class, 'publicIndex'])->name('public.extracurricular.index');
@@ -67,10 +68,12 @@ Route::middleware(['auth.redirect', 'auth', 'admin'])->group(function () {
     Route::delete('/administrator/students/destroy/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
 
     // Teachers
-    Route::get('/administrator/teachers', [TeacherController::class, 'index'])->name('teachers.index');
-    Route::post('/administrator/teachers/store', [TeacherController::class, 'store'])->name('teachers.store');
-    Route::put('/administrator/teachers/update/{id}', [TeacherController::class, 'update'])->name('teachers.update');
-    Route::delete('/administrator/teachers/destroy/{id}', [TeacherController::class, 'destroy'])->name('teachers.destroy');
+    Route::get('/teachers', [TeacherController::class, 'index'])->name('teachers.index');
+    Route::get('/teachers/create', [TeacherController::class, 'create'])->name('teachers.create');
+    Route::post('/teachers', [TeacherController::class, 'store'])->name('teachers.store');
+    Route::get('/teachers/{id}/edit', [TeacherController::class, 'edit'])->name('teachers.edit');
+    Route::put('/teachers/{id}', [TeacherController::class, 'update'])->name('teachers.update');
+    Route::delete('/teachers/{id}', [TeacherController::class, 'destroy'])->name('teachers.destroy');
 
     // News
     Route::get('/administrator/news', [NewsController::class, 'index'])->name('news.index');

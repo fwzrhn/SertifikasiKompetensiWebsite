@@ -9,12 +9,14 @@ class Teacher extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'id_guru';
-    
+    protected $primaryKey = 'id_guru'; 
+
     protected $fillable = [
         'nama_guru',
         'nip',
         'mapel',
-        'foto'
+        'foto',
     ];
+
+    public $timestamps = false;
 }

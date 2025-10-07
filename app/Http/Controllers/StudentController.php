@@ -42,7 +42,7 @@ class StudentController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nisn' => 'required|unique:students,nisn,' . $id . ',id_siswa',
+            'nisn' => 'required|digits:10|unique:students,nisn',
             'nama_siswa' => 'required|string|max:100',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
             'tahun_masuk' => 'required|integer',
@@ -65,7 +65,7 @@ class StudentController extends Controller
         return redirect()->route($route)->with('success', 'Data siswa berhasil dihapus!');
     }
 
-    
+
     public function publicIndex()
     {
         $students = Student::orderBy('nama_siswa')->get();

@@ -10,33 +10,45 @@ use Illuminate\Support\Facades\Storage;
 
 class TeacherController extends Controller
 {
+    // Helper: menentukan path view berdasarkan role
+    private function getViewPath($view)
+    {
+        $role = Auth::user()->role;
+        return ($role === 'operator' ? 'operator' : 'admin') . ".teacher.$view";
+    }
+
+    // Helper: menentukan route redirect berdasarkan role
+    private function getRedirectRoute()
+    {
+        return Auth::user()->role === 'operator' ? 'operator.teachers.index' : 'teachers.index';
+    }
 
     public function index()
     {
-        $teachers = Teacher::orderBy('created_at', 'desc')->get();
+        $teachers = Teacher::latest()->get();
         $schoolProfile = SchoolProfile::first();
 
-        if (Auth::user()->role === 'operator') {
-            return view('operator.teacher.index', compact('teachers', 'schoolProfile'));
-        }
-
-        return view('admin.teacher.index', compact('teachers', 'schoolProfile'));
+        return view($this->getViewPath('index'), compact('teachers', 'schoolProfile'));
     }
 
+    public function create()
+    {
+        $schoolProfile = SchoolProfile::first();
+        return view($this->getViewPath('create'), compact('schoolProfile'));
+    }
 
     public function store(Request $request)
     {
         $request->validate([
             'nama_guru' => 'required|string|max:100',
-            'nip' => 'required|string|max:30',
+            'nip' => 'required|string|max:30|unique:teachers,nip',
             'mapel' => 'required|string|max:100',
-            'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $fotoPath = null;
-        if ($request->hasFile('foto')) {
-            $fotoPath = $request->file('foto')->store('teachers', 'public');
-        }
+        $fotoPath = $request->hasFile('foto')
+            ? $request->file('foto')->store('teachers', 'public')
+            : null;
 
         Teacher::create([
             'nama_guru' => $request->nama_guru,
@@ -45,10 +57,16 @@ class TeacherController extends Controller
             'foto' => $fotoPath,
         ]);
 
-        $route = Auth::user()->role === 'operator' ? 'operator.teachers.index' : 'teachers.index';
-        return redirect()->route($route)->with('success', 'Guru berhasil ditambahkan.');
+        return redirect()->route($this->getRedirectRoute())->with('success', 'Guru berhasil ditambahkan.');
     }
 
+    public function edit($id)
+    {
+        $teacher = Teacher::findOrFail($id);
+        $schoolProfile = SchoolProfile::first();
+
+        return view($this->getViewPath('edit'), compact('teacher', 'schoolProfile'));
+    }
 
     public function update(Request $request, $id)
     {
@@ -56,10 +74,11 @@ class TeacherController extends Controller
 
         $request->validate([
             'nama_guru' => 'required|string|max:100',
-            'nip' => 'required|string|max:30',
+            'nip' => 'required|string|max:30|unique:teachers,nip,' . $teacher->id_guru . ',id_guru',
             'mapel' => 'required|string|max:100',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
+
 
         if ($request->hasFile('foto')) {
             if ($teacher->foto && Storage::disk('public')->exists($teacher->foto)) {
@@ -75,10 +94,8 @@ class TeacherController extends Controller
             'foto' => $teacher->foto,
         ]);
 
-        $route = Auth::user()->role === 'operator' ? 'operator.teachers.index' : 'teachers.index';
-        return redirect()->route($route)->with('success', 'Data guru berhasil diperbarui.');
+        return redirect()->route($this->getRedirectRoute())->with('success', 'Data guru berhasil diperbarui.');
     }
-
 
     public function destroy($id)
     {
@@ -90,16 +107,13 @@ class TeacherController extends Controller
 
         $teacher->delete();
 
-        $route = Auth::user()->role === 'operator' ? 'operator.teachers.index' : 'teachers.index';
-        return redirect()->route($route)->with('success', 'Guru berhasil dihapus.');
+        return redirect()->route($this->getRedirectRoute())->with('success', 'Guru berhasil dihapus.');
     }
-
-
     public function publicIndex()
     {
-        $teachers = Teacher::orderBy('nama_guru')->get();
-        $schoolProfile = SchoolProfile::first();
 
-        return view('teachers.index', compact('teachers', 'schoolProfile'));
+        $teachers = Teacher::all();
+        return view('teachers.index', compact('teachers'));
     }
+
 }

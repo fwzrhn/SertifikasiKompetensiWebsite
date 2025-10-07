@@ -158,6 +158,7 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link {{ request()->is('beranda*') ? 'active' : '' }}" href="{{ url('/') }}">Beranda</a></li>
                     <li class="nav-item"><a class="nav-link {{ request()->is('students*') ? 'active' : '' }}" href="{{ route('public.students.index') }}">Siswa</a></li>
                     <li class="nav-item"><a class="nav-link {{ request()->is('teachers*') ? 'active' : '' }}" href="{{ route('public.teachers.index') }}">Guru</a></li>
                     <li class="nav-item"><a class="nav-link {{ request()->is('news*') ? 'active' : '' }}" href="{{ route('public.news.index') }}">Berita</a></li>

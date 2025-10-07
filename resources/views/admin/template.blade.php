@@ -100,19 +100,19 @@
             </li>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request()->is('administrator/students*') ? 'active' : '' }}" href="{{ route('students.index') }}">Students</a>
+                <a class="nav-link {{ request()->is('administrator/students*') ? 'active' : '' }}" href="{{ route('students.index') }}">Murid</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request()->is('administrator/teachers*') ? 'active' : '' }}" href="{{ route('teachers.index') }}">Teachers</a>
+                <a class="nav-link {{ request()->is('administrator/teachers*') ? 'active' : '' }}" href="{{ route('teachers.index') }}">Guru</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request()->is('administrator/extracurriculars*') ? 'active' : '' }}" href="{{ route('extracurricular.index') }}">Extracurricular</a>
+                <a class="nav-link {{ request()->is('administrator/extracurriculars*') ? 'active' : '' }}" href="{{ route('extracurricular.index') }}">Ekstrakurikuler</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request()->is('administrator/news*') ? 'active' : '' }}" href="{{ route('news.index') }}">News</a>
+                <a class="nav-link {{ request()->is('administrator/news*') ? 'active' : '' }}" href="{{ route('news.index') }}">Berita</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request()->is('administrator/galleries*') ? 'active' : '' }}" href="{{ route('galleries.index') }}">Gallery</a>
+                <a class="nav-link {{ request()->is('administrator/galleries*') ? 'active' : '' }}" href="{{ route('galleries.index') }}">Galeri</a>
             </li>
         </ul>
         <div class="mt-auto p-3">
